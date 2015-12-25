@@ -1,7 +1,11 @@
 'use strict';
 
-var a = 5;
+var shell = require('./shell');
 
-module.exports = function() {
-  console.log('Hello from app');
+var init = function() {
+  shell.init();
+};
+
+module.exports = {
+  init: init
 };

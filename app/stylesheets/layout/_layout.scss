@@ -2,3 +2,14 @@
   margin: 0 auto;
   max-width: 960px;
 }
+
+.app {
+  background-color: darken($primary-dark, 20%);
+  box-shadow: -3px 6px 10px rgba(0, 0, 0, .3);
+  min-height: 100vh;
+
+  @media(min-width: $screen-tablet) {
+    margin-top: 1em;
+    min-height: 90vh;
+  }
+}
