@@ -1,0 +1,10 @@
+scss_files: "app/stylesheets/**/*.scss"
+
+exclude: 'app/stylesheets/third-party/*.scss'
+
+linters:
+  ColorKeyword:
+    enabled: true
+
+  ColorVariable:
+    enabled: false
