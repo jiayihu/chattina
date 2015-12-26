@@ -16,6 +16,7 @@ var configModule = function(inputMap) {
 
 var init = function() {
   routing.init();
+  routing.moveTo('/about');
 };
 
 module.exports = {

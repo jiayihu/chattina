@@ -1,3 +1,3 @@
 #Chattina
 
-An MVC Chat, built in Javascript for fun and learning. No JQuery dependency.
+An MVC Chat, built in native Javascript for fun and learning. No JQuery/MV* Framework dependency.

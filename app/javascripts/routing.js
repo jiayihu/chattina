@@ -35,6 +35,11 @@ var init = function() {
 
 };
 
+var moveTo = function(newPage) {
+  page(newPage);
+};
+
 module.exports = {
-  init: init
+  init: init,
+  moveTo: moveTo
 };
