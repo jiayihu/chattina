@@ -8,11 +8,19 @@
 
 {% block content %}
 <div class="app">
-  <ul>
-      <li><a href="./">/</a></li>
-      <li><a href="/chat">Chat</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
+  <div class="head">
+    {% include 'includes/head.html' %}
+  </div>
+
+  <div class="content">
+    <div class="left">
+
+    </div>
+    <div class="right">
+       <div class="chat" style="height: 500px"> <!-- TODO: write JS for responsive height -->
+         {% include 'includes/chat.html' %}
+       </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
