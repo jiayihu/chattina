@@ -1,7 +1,8 @@
 'use strict';
 
 var helpers = require('./helpers');
-var routing = require('./routing');
+var model = require('./model');
+var page = require('page');
 var configMap = {
 
 };
@@ -15,8 +16,7 @@ var configModule = function(inputMap) {
 };
 
 var init = function() {
-  routing.init();
-  routing.moveTo('/about');
+  model.init();
 };
 
 module.exports = {

@@ -35,11 +35,15 @@ var init = function() {
 
 };
 
-var moveTo = function(newPage) {
+/**
+ * Moves to a new page, changing the hash
+ * @param  {string} newPage The hash of the new page
+ */
+var changePage = function(newPage) {
   page(newPage);
 };
 
 module.exports = {
   init: init,
-  moveTo: moveTo
+  changePage: changePage
 };
