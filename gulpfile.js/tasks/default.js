@@ -5,7 +5,6 @@ var defaultTask = function(cb) {
   runSequence(
     ['html', 'css', 'scripts'],
     ['fonts', 'images', 'static'],
-    'deploy',
     'watch'
   );
 };

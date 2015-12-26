@@ -1,7 +1,7 @@
 {
-  "name": "bicity",
+  "name": "chattina",
   "version": "0.0.1",
-  "description": "Always be sure to find your city bike",
+  "description": "Learning",
   "scripts": {
     "deploy": "gulp deploy",
     "production": "gulp production",
