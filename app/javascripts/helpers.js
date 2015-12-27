@@ -2,6 +2,11 @@
  * [function description]
  * @param  {Function} callback Callback
  */
+
+var notie = require('notie');
+
+
+
 var $ready = function(callback) {
   if(document.readyState !== 'loading') {
     callback();
@@ -17,14 +22,8 @@ var $ready = function(callback) {
 /**
  * Throws a new Error
  */
-var makeError = function(name, msg, data) {
-  var error = {};
-  error.name = name;
-  error.msg = msg;
-  if(data) {
-    error.data = data;
-  }
-  console.error(error.msg);
+var makeError = function(msg) {
+  notie.alert(3, msg, 4);
 };
 
 
