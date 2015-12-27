@@ -10,19 +10,24 @@
   background-color: white;
   border-radius: 3px;
   box-shadow: -3px 6px 10px rgba(0, 0, 0, .3);
-  min-height: 100vh;
+  height: 100vh;
   position: relative;
   text-align: center;
 
   @media(min-width: $screen-tablet) {
+    height: calc(100vh - 2em);
     margin-top: 1em;
-    min-height: 90vh;
   }
 
   .head {
     background-color: darken($primary-dark, 20%);
     color: #fff;
-    padding: 1em;
+    height: 10vh;
+
+    h1 {
+      font-size: 1.725em;
+      line-height: 10vh;
+    }
   }
 
   .left {
