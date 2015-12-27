@@ -21,6 +21,6 @@ var init = function() {
 };
 
 module.exports = {
-  configModule,
+  configModule: configModule,
   init: init
 };

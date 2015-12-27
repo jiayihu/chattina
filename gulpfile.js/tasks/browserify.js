@@ -16,9 +16,10 @@ var paths = {
   dest: path.join(config.root.dest, config.tasks.scripts.dest)
 };
 
+var isProduction = process.env.NODE_ENV === 'production';
 var customOpts = {
   entries: paths.src,
-  debug: true
+  debug: isProduction? false : true
 };
 var opts = assign({}, watchify.args, customOpts);
 var b = watchify(browserify(opts));
@@ -28,7 +29,8 @@ var bundle = function() {
     .on('error', console.log)
     .pipe(source('main.js'))
     .pipe(buffer())
-    .pipe(gulpif(process.env.NODE_ENV === 'production', uglify()))
+    .pipe(gulpif(isProduction, uglify()))
+    .on('error', console.log)
     .pipe(gulp.dest(paths.dest))
     .pipe(browserSync.stream());
 };
