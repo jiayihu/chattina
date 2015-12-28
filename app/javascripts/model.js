@@ -1,12 +1,12 @@
 'use strict';
-var localforage = require('localforage');
+var people = require('./model/people');
 
 /**
  * PUBLIC FUNCTIONS
  */
 
 var init = function() {
-  localforage.clear();
+  people.init();
 };
 
 module.exports = {
