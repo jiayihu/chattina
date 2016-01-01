@@ -58,13 +58,13 @@ var makePerson = function(personMap) {
     });
 
   return person;
-}
+};
 
 var people = {
   getDb: function() {
     return stateMap.peopleDb;
   },
-  getCidMap: function() {
+  getIdMap: function() {
     return stateMap.peopleIdMap;
   }
 };
