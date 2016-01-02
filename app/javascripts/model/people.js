@@ -1,17 +1,14 @@
 'use strict';
 
-var fake = require('../fake');
-var PouchDB = require('pouchdb');
+var fake = require('../fake'); //Fake data
+var localforage = require('localforage');
 
 var configMap = {
   anonId: 'a0' //Special ID per anonymous person
 };
 var stateMap = {
   anonUser: null,
-  peopleIdMap: {
-
-  },
-  peopleDb: new PouchDB('people'),
+  peopleDb: null,
   user: null
 };
 var isFakeData = true;
@@ -45,33 +42,23 @@ var makePerson = function(personMap) {
   person.name = personMap.name;
   person.cssMap = personMap.cssMap;
 
-  stateMap.peopleIdMap[personMap._id] = person;
-
-  db.put(person)
-    .catch(function(err) {
-      if(err.status === 409) {
-        console.log('It\'s alright');
-      }
-    })
-    .then(function(response) {
-      console.log(response);
-    });
+  db.set(person._id, person);
 
   return person;
 };
 
-var people = {
-  getDb: function() {
-    return stateMap.peopleDb;
-  },
-  getIdMap: function() {
-    return stateMap.peopleIdMap;
-  }
-};
+/**
+ * PUBLIC FUNCTIONS
+ */
+
+ var getDb = function() {
+   return stateMap.peopleDb;
+ };
 
 var init = function() {
-  //Expose PouchDB to window for debug. Required by PouchDB Chrome Extension
-  window.PouchDB = PouchDB;
+  stateMap.peopleDb = localforage.createInstance({
+    name: 'people'
+  });
 
   stateMap.anonUser = makePerson({
     _id: configMap.anonId,
@@ -97,5 +84,5 @@ var init = function() {
 
 module.exports = {
   init: init,
-  people: people
+  getDb: getDb
 };
