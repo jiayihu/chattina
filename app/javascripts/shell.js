@@ -17,7 +17,7 @@ var configModule = function(inputMap) {
 
 var init = function() {
   model.init();
-  helpers.makeError('The app is still in production, not ready for usage. Please have a cookie and come back again later.');
+  //helpers.makeError('The app is still in production, not ready for usage. Please have a cookie and come back again later.');
 };
 
 module.exports = {

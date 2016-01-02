@@ -7,6 +7,8 @@ var people = require('./model/people');
 
 var init = function() {
   people.init();
+  window.peopleDb = people.getDb();
+  window.user = people.getPerson('a0');
 };
 
 module.exports = {

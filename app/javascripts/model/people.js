@@ -8,7 +8,9 @@ var configMap = {
 };
 var stateMap = {
   anonUser: null,
-  peopleDb: null,
+  peopleDb: localforage.createInstance({
+    name: 'people'
+  }),
   user: null
 };
 var isFakeData = true;
@@ -37,32 +39,44 @@ var makePerson = function(personMap) {
     throw 'Client id and name are required';
   }
 
-  var person = Object.create(personProto);
-  person._id = personMap._id;
-  person.name = personMap.name;
-  person.cssMap = personMap.cssMap;
+  db.setItem(personMap._id, personMap, function(error) {
+    if(error) {
+      console.error(error);
+    }
+  });
 
-  db.set(person._id, person);
-
-  return person;
+  return personMap;
 };
 
 /**
  * PUBLIC FUNCTIONS
  */
 
- var getDb = function() {
-   return stateMap.peopleDb;
- };
+var getDb = function() {
+ return stateMap.peopleDb;
+};
 
-var init = function() {
-  stateMap.peopleDb = localforage.createInstance({
-    name: 'people'
+/**
+ * Gets the person for db and returns a 'person' object from the data
+ * @param  {string} _id Person's id
+ * @return {object}
+ */
+var getPerson = function(_id) {
+  var person = Object.create(personProto);
+  person._id = _id;
+  stateMap.peopleDb.getItem(_id, function(err, value) {
+    person.name = value.name;
+    person.avatar = value.avatar;
   });
 
+  return person;
+};
+
+var init = function() {
   stateMap.anonUser = makePerson({
     _id: configMap.anonId,
-    name: 'Anonymous'
+    name: 'Anonymous',
+    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg'
   });
   stateMap.user = stateMap.anonUser;
 
@@ -84,5 +98,6 @@ var init = function() {
 
 module.exports = {
   init: init,
-  getDb: getDb
+  getDb: getDb,
+  getPerson: getPerson
 };
