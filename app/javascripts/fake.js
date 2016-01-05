@@ -42,16 +42,30 @@ var getPeopleList = function() {
 /**
  * Fake Socket.IO API
  */
+var fakeIdSerial = 6;
 var callbackMap = {};
+
+var makeFakeId = function() {
+  return '_id' + String(fakeIdSerial++);
+};
+
 var mockSio = {
   on: function(msgType, callback) {
     callbackMap[msgType] = callback;
   },
   emit: function(msgType, data) {
-    if(msgType === 'login' && callbackMap.login) {
+    if(msgType === 'adduser' && callbackMap.userupdate) {
       setTimeout(function() {
-        callbackMap.login(data);
-      }, 1000);
+        callbackMap.userupdate(
+          [
+            {
+              _id: makeFakeId(),
+              name: data.name,
+              avatar: data.avatar
+            }
+          ]
+        );
+      }, 2000);
     }
   }
 };
