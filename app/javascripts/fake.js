@@ -46,7 +46,7 @@ var fakeIdSerial = 6;
 var callbackMap = {};
 
 var makeFakeId = function() {
-  return '_id' + String(fakeIdSerial++);
+  return 'id_' + String(fakeIdSerial+=1);
 };
 
 var mockSio = {

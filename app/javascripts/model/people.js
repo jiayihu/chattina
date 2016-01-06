@@ -31,7 +31,7 @@ var personProto = {
     return this.cid === stateMap.currentUser.cid;
   },
   getIsAnon: function() {
-    return this.cid === stateMap.currentUser.cid;
+    return this.cid === stateMap.anonUser.cid;
   }
 };
 
@@ -80,15 +80,15 @@ var makeCid = function() {
  * backend sends confirmation and data for the user login
  * @param  {object} user User data returned from the backend
  */
-var completeLogin = function(user) {
-  stateMap.currentUser.cid = user._id;
+var completeLogin = function(userList) {
+  var user = userList[0];
   stateMap.currentUser.id = user._id;
   stateMap.currentUser.name = user.name;
   stateMap.currentUser.avatar = user.avatar;
 
   stateMap.peopleCidMap[user._id] = user;
 
-  pubSub.publish('login', user);
+  pubSub.publish('login', stateMap.currentUser);
 };
 
 var removePerson = function(person) {
