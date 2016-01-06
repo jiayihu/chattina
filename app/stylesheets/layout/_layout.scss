@@ -21,20 +21,13 @@
 
   .head {
     background-color: darken($primary-dark, 20%);
+    background-image: linear-gradient(30deg, darken($primary-dark, 10%) , darken($primary-dark, 30%));
     color: #fff;
     height: 10vh;
 
     h1 {
-      font-size: 1.725em;
+      font-size: 1.5em;
       line-height: 10vh;
     }
-  }
-
-  .left {
-
-  }
-
-  .right {
-
   }
 }
