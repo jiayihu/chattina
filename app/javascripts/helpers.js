@@ -5,25 +5,24 @@
 
 var notie = require('notie');
 
+/**
+ * Throws a new Error
+ */
+var makeError = function(msg) {
+  notie.alert(3, msg, 4);
+};
 
-
+/**
+ * Runs callback function when DOM is ready (JQuery function)
+ * @param  {Function} callback [description]
+ * @return {[type]}
+ */
 var $ready = function(callback) {
   if(document.readyState !== 'loading') {
     callback();
   } else {
     document.addEventListener('DOMContentLoaded', callback);
   }
-};
-
-/**
- * 	NO JQUERY FUNCTIONS
- */
-
-/**
- * Throws a new Error
- */
-var makeError = function(msg) {
-  notie.alert(3, msg, 4);
 };
 
 
@@ -46,7 +45,12 @@ var setConfigMap = function(inputMap, configMap) {
   }
 };
 
+var init = function() {
+  Element.prototype.qs = Element.prototype.querySelector;
+};
+
 module.exports = {
+  init: init,
   makeError: makeError,
   $ready: $ready,
   setConfigMap: setConfigMap
