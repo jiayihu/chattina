@@ -70,7 +70,6 @@ var init = function() {
   if(isTesting) {
     testing();
   }
-  //helpers.makeError('The app is still in production, not ready for usage. Please have a cookie and come back again later.');
 
   //Account
   stateMap.account = document.getElementsByClassName('account')[0];

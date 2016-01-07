@@ -19,6 +19,7 @@
     },
 
     "scripts": {
+      "main": "app.js",
       "src": "javascripts",
       "dest": "js",
       "extensions": ["js"]

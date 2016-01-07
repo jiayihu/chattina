@@ -12,7 +12,7 @@ var assign = require('lodash.assign');
 var browserSync  = require('browser-sync');
 
 var paths = {
-  src: path.join(config.root.src, config.tasks.scripts.src, '/main.js'),
+  src: path.join(config.root.src, config.tasks.scripts.src, config.tasks.scripts.main),
   dest: path.join(config.root.dest, config.tasks.scripts.dest)
 };
 
