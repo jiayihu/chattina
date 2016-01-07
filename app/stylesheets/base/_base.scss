@@ -12,6 +12,16 @@ body {
   text-align: center;
 }
 
+a {
+  color: $accent;
+  text-decoration: none;
+  transition: color ease-in-out .4s;
+
+  &:hover {
+    color: darken($accent, 10%);
+  }
+}
+
 p {
   font-size: 1em;
   font-weight: 300;
@@ -22,8 +32,4 @@ h1 {
   font-weight: 300;
   margin: 0;
   text-transform: uppercase;
-}
-
-a {
-  color: $primary;
 }

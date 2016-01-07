@@ -1,0 +1,22 @@
+.nav {
+  padding-left: 1em;
+  text-align: left;
+}
+
+.title {
+  flex-grow: 2;
+
+  h1 {
+    font-size: 1.5em;
+    line-height: 10vh;
+  }
+}
+
+.account {
+  padding-right: 1em;
+  text-align: right;
+
+  .sign {
+    cursor: pointer;
+  }
+}

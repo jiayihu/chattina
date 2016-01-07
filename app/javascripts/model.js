@@ -11,5 +11,6 @@ var init = function() {
 };
 
 module.exports = {
-  init: init
+  init: init,
+  people: people
 };

@@ -1,3 +1,18 @@
+.flex {
+  align-items: center;
+  display: flex;
+
+  &__col--1 {
+    flex-basis: 30%;
+    flex-grow: 1;
+  }
+
+  &__col--2 {
+    flex-basis: 40%;
+    flex-grow: 2;
+  }
+}
+
 .container {
   margin: 0 auto;
 
@@ -18,16 +33,11 @@
     height: calc(100vh - 2em);
     margin-top: 1em;
   }
+}
 
-  .head {
-    background-color: darken($primary-dark, 20%);
-    background-image: linear-gradient(30deg, darken($primary-dark, 10%) , darken($primary-dark, 30%));
-    color: #fff;
-    height: 10vh;
-
-    h1 {
-      font-size: 1.5em;
-      line-height: 10vh;
-    }
-  }
+.head {
+  background-color: darken($primary-dark, 20%);
+  background-image: linear-gradient(30deg, darken($primary-dark, 10%) , darken($primary-dark, 30%));
+  color: #fff;
+  height: 10vh;
 }
