@@ -31,6 +31,9 @@ var testing = function() {
  * FEATURES EVENT HANDLERS
  */
 
+
+/* ACCOUNT */
+
 var onSignClick = function() {
   var userName;
   var currentUser = model.people.getCurrentUser();

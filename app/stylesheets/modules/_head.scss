@@ -4,7 +4,6 @@
 }
 
 .title {
-  flex-grow: 2;
 
   h1 {
     font-size: 1.5em;
@@ -14,7 +13,11 @@
 
 .account {
   padding-right: 1em;
+  padding-top: 1.3em;
+  position: absolute;
+  right: 0;
   text-align: right;
+  top: 0;
 
   .sign {
     cursor: pointer;
