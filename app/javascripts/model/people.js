@@ -37,10 +37,10 @@ var personProto = {
 
 /**
  * Creates the 'person' object and stores it in the db
- * @param  {object} personMap The person makePerson
+ * @param  {object} personMap The person map
  * @return {object} person The created person
  */
-var makePerson = function(personMap) {
+var _makePerson = function(personMap) {
   var db = stateMap.peopleDb;
   var cid = personMap.cid;
   var id = personMap.id;
@@ -71,7 +71,7 @@ var makePerson = function(personMap) {
   return person;
 };
 
-var makeCid = function() {
+var _makeCid = function() {
   return 'c' + String(stateMap.cidSerial++);
 };
 
@@ -80,7 +80,7 @@ var makeCid = function() {
  * backend sends confirmation and data for the user login
  * @param  {object} user User data returned from the backend
  */
-var completeLogin = function(userList) {
+var _completeLogin = function(userList) {
   var user = userList[0];
   stateMap.currentUser.id = user._id;
   stateMap.currentUser.name = user.name;
@@ -91,7 +91,7 @@ var completeLogin = function(userList) {
   pubSub.publish('login', stateMap.currentUser);
 };
 
-var removePerson = function(person) {
+var _removePerson = function(person) {
   if( !person || (person.id === configMap.anonId) ) {
     return false;
   }
@@ -126,7 +126,7 @@ var getDb = function() {
 };
 
 var init = function() {
-  stateMap.anonUser = makePerson({
+  stateMap.anonUser = _makePerson({
     cid: configMap.anonId,
     id: configMap.anonId,
     name: 'Anonymous',
@@ -141,7 +141,7 @@ var init = function() {
 
     for(i = 0; i < peopleList.length; i++) {
       personMap = peopleList[i];
-      makePerson({
+      _makePerson({
         cid: personMap._id,
         id: personMap._id,
         name: personMap.name,
@@ -154,13 +154,13 @@ var init = function() {
 var login = function(userName) {
   var sio = isFakeData? fake.mockSio : console.error('No Sio');
 
-  stateMap.currentUser = makePerson({
-    cid: makeCid(),
+  stateMap.currentUser = _makePerson({
+    cid: _makeCid(),
     name: userName,
     avatar: configMap.defaultAvatar
   });
 
-  sio.on('userupdate', completeLogin);
+  sio.on('userupdate', _completeLogin);
 
   sio.emit('adduser', {
     cid: stateMap.currentUser.cid,
@@ -173,7 +173,7 @@ var logout = function() {
   var isRemoved = false;
   var user = stateMap.currentUser;
 
-  isRemoved = removePerson(user);
+  isRemoved = _removePerson(user);
   stateMap.currentUser = stateMap.anonUser;
 
   pubSub.publish('logout', user);
