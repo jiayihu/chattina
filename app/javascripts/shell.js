@@ -16,7 +16,7 @@ var stateMap = {
 };
 var isTesting = false;
 
-var testing = function() {
+var _testing = function() {
   pubSub.subscribe('login', function(msg, data) {
     console.log(msg + ': ');
     console.log(data);
@@ -34,7 +34,7 @@ var testing = function() {
 
 /* ACCOUNT */
 
-var onSignClick = function() {
+var _onSignClick = function() {
   var userName;
   var currentUser = model.people.getCurrentUser();
 
@@ -49,13 +49,13 @@ var onSignClick = function() {
   return false;
 };
 
-var onAccountLogin = function(msg, currentUser) {
+var _onAccountLogin = function(msg, currentUser) {
   stateMap.account
     .getElementsByClassName('sign')[0]
     .textContent = currentUser.name;
 };
 
-var onAccountLogout = function() {
+var _onAccountLogout = function() {
   stateMap.account
     .getElementsByClassName('sign')[0]
     .textContent = 'Please sign-in';
@@ -71,15 +71,15 @@ var configModule = function(inputMap) {
 
 var init = function() {
   if(isTesting) {
-    testing();
+    _testing();
   }
 
   //Account
   stateMap.account = document.getElementsByClassName('account')[0];
   account.init(stateMap.account);
-  account.bind('onSignClick', onSignClick);
-  pubSub.subscribe('login', onAccountLogin);
-  pubSub.subscribe('logout', onAccountLogout);
+  account.bind('onSignClick', _onSignClick);
+  pubSub.subscribe('login', _onAccountLogin);
+  pubSub.subscribe('logout', _onAccountLogout);
 };
 
 module.exports = {

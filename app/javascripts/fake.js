@@ -45,7 +45,7 @@ var getPeopleList = function() {
 var fakeIdSerial = 6;
 var callbackMap = {};
 
-var makeFakeId = function() {
+var _makeFakeId = function() {
   return 'id_' + String(fakeIdSerial+=1);
 };
 
@@ -59,7 +59,7 @@ var mockSio = {
         callbackMap.userupdate(
           [
             {
-              _id: makeFakeId(),
+              _id: _makeFakeId(),
               name: data.name,
               avatar: data.avatar
             }
