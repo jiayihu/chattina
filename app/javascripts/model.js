@@ -113,7 +113,7 @@ var _updateList = function(peopleList) {
       return;
     }
 
-    people._makePerson({
+    _makePerson({
       cid: person._id,
       id: person._id,
       name: person.name,
@@ -154,7 +154,7 @@ var _publishListChange = function(peopleList) {
 
 var people = {
   clearDb: function() {
-    var user = stateMap.user;
+    var currentUser = stateMap.currentUser;
 
     stateMap.peopleDb.clear(function(err) {
       if(err) {
@@ -163,7 +163,7 @@ var people = {
         console.log('People db has been cleared');
       }
 
-      stateMap.peopleDb.setItem(user.cid, user, function(err) {
+      stateMap.peopleDb.setItem(currentUser.cid, currentUser, function(err) {
         if(err) {
           console.error('Error. setItem in clearDb');
         }
@@ -171,7 +171,7 @@ var people = {
     });
 
     stateMap.peopleCidMap = {};
-    stateMap.peopleCidMap[user.cid] = user;
+    stateMap.peopleCidMap[currentUser.cid] = currentUser;
 
   },
 
@@ -236,6 +236,11 @@ var chat = {
       return false;
     }
 
+    if(stateMap.currentUser.getIsAnon()) {
+      console.warn('User must be signed in before joining chat');
+      return false;
+    }
+
     sio.on('listChange', _publishListChange);
     stateMap.isConnected = true;
 
@@ -253,20 +258,13 @@ var init = function() {
   stateMap.currentUser = stateMap.anonUser;
 
   if(isFakeData) {
-    var peopleList = fake.getPeopleList();
-    var i = 0;
-    var personMap = {};
-
-    for(i = 0; i < peopleList.length; i++) {
-      personMap = peopleList[i];
-      _makePerson({
-        cid: personMap._id,
-        id: personMap._id,
-        name: personMap.name,
-        avatar: personMap.avatar
-      });
-    }
+    //Init fake Socket IO
+    fake.init();
   }
+
+  //DEVELOPMENT ONLY
+  window.chat = chat;
+  window.people = people;
 };
 
 module.exports = {
