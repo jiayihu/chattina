@@ -113,6 +113,28 @@ var _removePerson = function(person) {
  * PUBLIC FUNCTIONS
  */
 
+var clearDb = function() {
+  var user = stateMap.user;
+
+  stateMap.peopleDb.clear(function(err) {
+    if(err) {
+      console.error('Error: clearDb.');
+    } else {
+      console.log('People db has been cleared');
+    }
+
+    stateMap.peopleDb.setItem(user.cid, user, function(err) {
+      if(err) {
+        console.error('Error. setItem in clearDb');
+      }
+    });
+  });
+
+  stateMap.peopleCidMap = {};
+  stateMap.peopleCidMap[user.cid] = user;
+
+};
+
 var getByCid = function(cid) {
   return stateMap.peopleCidMap[cid];
 };
@@ -182,10 +204,11 @@ var logout = function() {
 };
 
 module.exports = {
-  init: init,
+  clearDb: clearDb,
   getByCid: getByCid,
   getCurrentUser: getCurrentUser,
   getDb: getDb,
+  init: init,
   login: login,
   logout: logout
 };
