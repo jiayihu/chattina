@@ -10,6 +10,7 @@ var configMap = {
 };
 var stateMap = {
   anonUser: null,
+  chatee: null,
   cidSerial: 0,
   isConnected: false,
   peopleCidMap: {},
@@ -100,6 +101,7 @@ var _removePerson = function(person) {
  */
 var _updateList = function(peopleList) {
   var currentUser = people.getCurrentUser();
+  var isChateeonline = false;
 
   people.clearDb();
 
@@ -120,7 +122,14 @@ var _updateList = function(peopleList) {
       avatar: person.avatar
     });
 
+    if(stateMap.chatee && stateMap.chatee.id === person._id) {
+      isChateeonline = true;
+    }
   });
+
+  if(stateMap.chatee && !isChateeonline) {
+    chat.setChatee('');
+  }
 };
 
 /**
@@ -140,12 +149,26 @@ var _completeLogin = function(userList) {
 
   stateMap.peopleCidMap[user._id] = user;
 
+  chat.join();
+
   pubSub.publish('login', stateMap.currentUser);
 };
 
 var _publishListChange = function(peopleList) {
   _updateList(peopleList);
   pubSub.publish('listChange', peopleList);
+};
+
+var _publishUpdateChat = function(msg) {
+  //If user is not chatting with anyone or someone else wrote to us we set a new chatee
+  if(
+    !stateMap.chatee ||
+    ( (msg.senderId !== stateMap.currentUser.id) && (msg.senderId !== stateMap.chatee.id) )
+  ) {
+    chat.setChatee(msg.senderId);
+  }
+
+  pubSub.publish('updateChat', msg);
 };
 
 /**
@@ -209,6 +232,8 @@ var people = {
     var isRemoved = false;
     var user = stateMap.currentUser;
 
+    chat.leave();
+
     isRemoved = _removePerson(user);
     stateMap.currentUser = stateMap.anonUser;
 
@@ -219,6 +244,10 @@ var people = {
 };
 
 var chat = {
+  getChatee: function() {
+    return stateMap.chatee;
+  },
+
   leave: function() {
     var sio = fake.mockSio;
 
@@ -242,7 +271,50 @@ var chat = {
     }
 
     sio.on('listChange', _publishListChange);
+    sio.on('updateChat', _publishUpdateChat);
     stateMap.isConnected = true;
+
+    return true;
+  },
+
+  sendMsg: function(msgText) {
+    var msg;
+    var sio = fake.mockSio;
+
+    //Abort sending a msg if there is no connection or user/chatee is not set
+    if( !sio || !(stateMap.currentUser && stateMap.chatee) ) {
+      return false;
+    }
+
+    msg = {
+      destId: stateMap.chatee,
+      destName: stateMap.chatee.name,
+      senderId: stateMap.currentUser.id,
+      msgText: msgText
+    };
+
+    _publishUpdateChat(msg);
+    sio.emit('updateChat', msg);
+
+    return true;
+  },
+
+  setChatee: function(personId) {
+    var newChatee = stateMap.peopleCidMap[personId];
+
+    if(newChatee) {
+      if( stateMap.chatee && (stateMap.chatee.id === newChatee.id) ) {
+        return false;
+      }
+    } else {
+      newChatee = '';
+    }
+
+    pubSub.publish('setChatee', {
+      oldChatee: stateMap.chatee,
+      newChatee: newChatee
+    });
+    stateMap.chatee = newChatee;
 
     return true;
   }
