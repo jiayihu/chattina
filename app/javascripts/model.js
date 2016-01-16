@@ -22,6 +22,16 @@ var stateMap = {
 var isFakeData = true;
 
 /**
+ * EVENTS PUBLISHED BY THE MODEL
+ * -----------------------------
+ * 	* setChatee: when a new chatee is set
+ * 	* listChange: when the list of online people changes
+ * 	* updateChat: when a new msg is set or received
+ * 	* login: when login is completed
+ * 	* logout: when logout is completed
+ */
+
+/**
  * PRIVATE FUNCTIONS
  */
 
@@ -251,6 +261,7 @@ var chat = {
   leave: function() {
     var sio = fake.mockSio;
 
+    stateMap.chatee = null;
     stateMap.isConnected = false;
 
     if(sio) {
