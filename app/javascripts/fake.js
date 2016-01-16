@@ -54,7 +54,7 @@ var mockSio = {
   },
   emit: function(msgType, data) {
     var person;
-    if(msgType === 'adduser' && callbackMap.userupdate) {
+    if(msgType === 'addUser' && callbackMap.userupdate) {
       setTimeout(function() {
         person = {
           _id: _makeFakeId(),
@@ -67,9 +67,9 @@ var mockSio = {
       }, 2000);
     }
 
-    if(msgType === 'updateChat' && callbackMap.updatechat) {
+    if(msgType === 'updateChat' && callbackMap.updateChat) {
       setTimeout(function() {
-        callbackMap.updatechat(data);
+        callbackMap.updateChat(data);
       }, 2000);
     }
 
@@ -89,7 +89,7 @@ var emitMockMsg = function() {
       callbackMap.updateChat({
         destId: 'id_7',
         destName: 'Alfred',
-        senderId: 'id_04',
+        senderId: 'id_4',
         msgText: 'Hi there from Arya!'
       });
     } else {

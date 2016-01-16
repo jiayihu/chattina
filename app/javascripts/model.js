@@ -22,16 +22,6 @@ var stateMap = {
 var isFakeData = true;
 
 /**
- * EVENTS PUBLISHED BY THE MODEL
- * -----------------------------
- * 	* setChatee: when a new chatee is set
- * 	* listChange: when the list of online people changes
- * 	* updateChat: when a new msg is set or received
- * 	* login: when login is completed
- * 	* logout: when logout is completed
- */
-
-/**
  * PRIVATE FUNCTIONS
  */
 
@@ -147,6 +137,16 @@ var _updateList = function(peopleList) {
  */
 
 /**
+ * EVENTS PUBLISHED BY THE MODEL
+ * -----------------------------
+ * 	* setChatee: when a new chatee is set
+ * 	* listChange: when the list of online people changes
+ * 	* updateChat: when a new msg is set or received
+ * 	* login: when login is completed
+ * 	* logout: when logout is completed
+ */
+
+/**
  * Updates the current user information and publishes an 'login' event when
  * backend sends confirmation and data for the user login
  * @param  {object} user User data returned from the backend
@@ -159,6 +159,8 @@ var _completeLogin = function(userList) {
 
   stateMap.peopleCidMap[user._id] = user;
 
+  console.log('Hello ' + user.name + ' !');
+
   chat.join();
 
   pubSub.publish('login', stateMap.currentUser);
@@ -170,6 +172,7 @@ var _publishListChange = function(peopleList) {
 };
 
 var _publishUpdateChat = function(msg) {
+  console.log(msg);
   //If user is not chatting with anyone or someone else wrote to us we set a new chatee
   if(
     !stateMap.chatee ||
@@ -192,8 +195,6 @@ var people = {
     stateMap.peopleDb.clear(function(err) {
       if(err) {
         console.error('Error: clearDb.');
-      } else {
-        console.log('People db has been cleared');
       }
 
       stateMap.peopleDb.setItem(currentUser.cid, currentUser, function(err) {
@@ -231,7 +232,7 @@ var people = {
 
     sio.on('userupdate', _completeLogin);
 
-    sio.emit('adduser', {
+    sio.emit('addUser', {
       cid: stateMap.currentUser.cid,
       name: stateMap.currentUser.name,
       avatar: stateMap.currentUser.avatar
@@ -298,7 +299,7 @@ var chat = {
     }
 
     msg = {
-      destId: stateMap.chatee,
+      destId: stateMap.chatee.id,
       destName: stateMap.chatee.name,
       senderId: stateMap.currentUser.id,
       msgText: msgText
