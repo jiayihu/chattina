@@ -1,13 +1,10 @@
 .chat {
-  height: 90vh;
-
-  @media (min-width: $screen-tablet) {
-    height: calc(90vh - 2em);
-  }
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 
   .msgs {
-    height: 90%;
-    max-height: 90%;
+    flex-grow: 1;
     overflow: auto;
   }
 
@@ -40,22 +37,20 @@
 
   .box {
     border-radius: 0 0 3px 3px;
-    bottom: 0;
-    height: 10%;
-    max-height: 55px;
-    min-height: 40px;
-    position: absolute;
+    display: flex;
+    flex-shrink: 0; //Fix for older Chrome versions: to be sure that it will not shrink when .msgs overflows
+    height: 3.125rem;
+    margin-top: auto;
     text-align: left;
     width: 100%;
 
     &__input {
       background-color: darken($primary, 20%);
       border: 0;
-      border-radius: 0 0 3px 3px;
+      border-bottom-left-radius: 2px;
       color: $gray-light;
-      height: 100%;
+      flex-grow: 1;
       padding: 1em;
-      width: 100%;
     }
 
     &__input:focus {
@@ -65,16 +60,13 @@
     button {
       background-color: $primary;
       border: 0;
-      border-radius: 0 0 3px;
+      border-bottom-right-radius: 2px;
       color: #fff;
       font-size: 1.2em;
       -moz-osx-font-smoothing: grayscale;
       -webkit-font-smoothing: antialiased;
       font-weight: 600;
       height: 100%;
-      position: absolute;
-      right: 0;
-      top: 0;
       width: 100px;
     }
   }

@@ -33,3 +33,17 @@
   min-height: 48px;
   position: relative;
 }
+
+.content {
+  display: flex;
+  height: 90vh;
+
+  @media(min-width: $screen-tablet) {
+    height: calc(90vh - 2em);
+  }
+
+  .right {
+    display: flex;
+    flex-grow: 1;
+  }
+}
