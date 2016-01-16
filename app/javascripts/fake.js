@@ -66,13 +66,43 @@ var mockSio = {
         callbackMap.userupdate([person]);
       }, 2000);
     }
+
+    if(msgType === 'updateChat' && callbackMap.updatechat) {
+      setTimeout(function() {
+        callbackMap.updatechat(data);
+      }, 2000);
+    }
+
+    if(msgType === 'leaveChat') {
+      delete callbackMap.listChange;
+      delete callbackMap.updateChat;
+
+      sendListChange();
+    }
+
   }
+};
+
+var emitMockMsg = function() {
+  window.setTimeout(function() {
+    if(callbackMap.updateChat) {
+      callbackMap.updateChat({
+        destId: 'id_7',
+        destName: 'Alfred',
+        senderId: 'id_04',
+        msgText: 'Hi there from Arya!'
+      });
+    } else {
+      emitMockMsg();
+    }
+  }, 4000);
 };
 
 var sendListChange = function() {
   timeoutID = window.setTimeout(function() {
     if(callbackMap.listChange) {
       callbackMap.listChange(peopleList);
+      emitMockMsg();
       window.clearTimeout(timeoutID);
     } else {
       sendListChange();
