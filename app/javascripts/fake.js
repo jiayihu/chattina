@@ -67,6 +67,18 @@ var mockSio = {
       }, 2000);
     }
 
+    if(msgType === 'updateAvatar' && callbackMap.listChange) {
+      var i = 0;
+      for(i = 0; i < peopleList.length; i+=1) {
+        if(peopleList[i]._id === data.personId) {
+          console.log(peopleList[i]);
+          peopleList[i].avatar = data.avatar;
+        }
+      }
+
+      callbackMap.listChange(peopleList);
+    }
+
     if(msgType === 'updateChat' && callbackMap.updateChat) {
       setTimeout(function() {
         callbackMap.updateChat(data);

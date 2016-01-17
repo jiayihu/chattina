@@ -329,6 +329,20 @@ var chat = {
     stateMap.chatee = newChatee;
 
     return true;
+  },
+
+  /**
+   * Updates the avatar in the back-end
+   * @param  {object} avatarMap Object map in form {
+   *   personId: {string},
+   *   avatar: {string}
+   * }
+   */
+  updateAvatar: function(avatarMap) {
+    var sio = fake.mockSio;
+    if(sio) {
+      sio.emit('updateAvatar', avatarMap);
+    }
   }
 };
 
