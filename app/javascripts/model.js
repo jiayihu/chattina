@@ -77,24 +77,6 @@ var _makeCid = function() {
   return 'c' + String(stateMap.cidSerial++);
 };
 
-var _removePerson = function(person) {
-  if( !person || (person.id === configMap.anonId) ) {
-    return false;
-  }
-
-  stateMap.peopleDb.removeItem(person.cid, function(err) {
-    if(err) {
-      console.error(err);
-    }
-  });
-
-  if(person.cid) {
-    delete stateMap.peopleCidMap[person.cid];
-  }
-
-  return true;
-};
-
 /**
  * Refresh the 'people' object when a new people list is received
  * @param  {array} peopleList Array of people returned from back-end
@@ -115,15 +97,17 @@ var _updateList = function(peopleList) {
       return;
     }
 
-    _makePerson({
+    var clientPerson = _makePerson({
       cid: person._id,
       id: person._id,
       name: person.name,
       avatar: person.avatar
     });
 
+    //Update any changes about the chatee (logged in or updated avatar)
     if(stateMap.chatee && stateMap.chatee.id === person._id) {
       isChateeonline = true;
+      stateMap.chatee = clientPerson;
     }
   });
 
@@ -240,17 +224,15 @@ var people = {
   },
 
   logout: function() {
-    var isRemoved = false;
     var user = stateMap.currentUser;
 
     chat.leave();
 
-    isRemoved = _removePerson(user);
     stateMap.currentUser = stateMap.anonUser;
-
+    people.clearDb();
     pubSub.publish('logout', user);
 
-    return isRemoved;
+    return true;
   }
 };
 
