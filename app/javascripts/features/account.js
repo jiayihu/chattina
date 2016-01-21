@@ -5,7 +5,11 @@ var stateMap = {
   sign: null
 };
 
-
+/**
+ * Binds event handlers from shell to DOM events
+ * @param  {string} event Name of the event
+ * @param  {Function} callback Event handler
+ */
 var bind = function(event, callback) {
   if(event === 'onSignClick') {
     stateMap.sign.addEventListener('click', callback);

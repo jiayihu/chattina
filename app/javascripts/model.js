@@ -78,7 +78,7 @@ var _makeCid = function() {
 };
 
 /**
- * Refresh the 'people' object when a new people list is received
+ * Refresh the 'peopleDb' when a new people list is received
  * @param  {array} peopleList Array of people returned from back-end
  */
 var _updateList = function(peopleList) {
@@ -150,6 +150,10 @@ var _completeLogin = function(userList) {
   pubSub.publish('login', stateMap.currentUser);
 };
 
+/**
+ * Updates 'peopleDb' and publish 'listChange' event
+ * @param  {array} peopleList New peopleList returned from backend
+ */
 var _publishListChange = function(peopleList) {
   _updateList(peopleList);
   pubSub.publish('listChange', peopleList);
@@ -172,6 +176,10 @@ var _publishUpdateChat = function(msg) {
  * PUBLIC FUNCTIONS
  */
 
+/**
+ * Object with methods relevant to 'people' such as peopleDb, log-in/out etc.
+ * @type {Object}
+ */
 var people = {
   clearDb: function() {
     var currentUser = stateMap.currentUser;
@@ -236,6 +244,10 @@ var people = {
   }
 };
 
+/**
+ * Object with methods relevant to the chat such as join, set/get chatee, sendMsg
+ * @type {Object}
+ */
 var chat = {
   getChatee: function() {
     return stateMap.chatee;
@@ -315,10 +327,11 @@ var chat = {
 
   /**
    * Updates the avatar in the back-end
-   * @param  {object} avatarMap Object map in form {
+   * @param  {object} avatarMap Object map
+   * @example updateAvatar({
    *   personId: {string},
    *   avatar: {string}
-   * }
+   * })
    */
   updateAvatar: function(avatarMap) {
     var sio = fake.mockSio;

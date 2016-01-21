@@ -48,6 +48,11 @@ var _makeFakeId = function() {
   return 'id_' + String(fakeIdSerial+=1);
 };
 
+/**
+ * Mock Socket.IO
+ * http://socket.io
+ * @type {Object}
+ */
 var mockSio = {
   on: function(msgType, callback) {
     callbackMap[msgType] = callback;
@@ -62,6 +67,7 @@ var mockSio = {
           avatar: data.avatar
         };
 
+        //Add the new user to the list. This is applied also when user logs in.
         peopleList.push(person);
         callbackMap.userupdate([person]);
       }, 2000);
@@ -95,6 +101,9 @@ var mockSio = {
   }
 };
 
+/**
+ * Tries to send a fake msg to the client every 4s until success
+ */
 var emitMockMsg = function() {
   window.setTimeout(function() {
     if(callbackMap.updateChat) {
@@ -110,6 +119,11 @@ var emitMockMsg = function() {
   }, 4000);
 };
 
+/**
+ * Tries to send a fake new peopleList to the client every 1s until success.
+ * This should be successful only after user has logged in.
+ * @return {[type]}
+ */
 var sendListChange = function() {
   timeoutID = window.setTimeout(function() {
     if(callbackMap.listChange) {

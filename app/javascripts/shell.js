@@ -28,7 +28,7 @@ var _testing = function() {
 };
 
 /**
- * FEATURES EVENT HANDLERS
+ * FEATURES EVENTS SUBSCRIBERS
  */
 
 
