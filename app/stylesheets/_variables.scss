@@ -1,12 +1,15 @@
 // Colors
-$primary-dark: #59617B;
-$primary: #696996;
-$accent: #2DC0BD;
-
+$primary: #e84a5f;
+$primary-dark: darken($primary, 30%);
+$primary-light: #ff847c;
+$accent: #99b898;
+$accent-secondary: #fecea8;
 
 $gray: #727272;
-$gray-dark: #212121;
+$gray-dark: #21363b;
 $gray-light: #D7D7DD;
+
+$white: #fff;
 $white-opacity: rgba(#fff, .54);
 
 $text: $gray;

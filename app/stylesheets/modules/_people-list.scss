@@ -1,0 +1,39 @@
+.people-list {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+
+.person {
+  align-items: center;
+  display: flex;
+  margin-bottom: 1em;
+
+  &__avatar {
+    border: 3px solid rgba($gray, .3);
+    border-radius: 50%;
+    max-height: 54px;
+    max-width: 54px;
+  }
+
+  &-details {
+    padding-left: .625rem;
+  }
+
+  &__name,
+  &__status {
+    display: block;
+  }
+
+  &__name {
+    color: $white-opacity;
+    font-weight: 400;
+  }
+
+  &__status {
+    text-align: left;
+
+    &--online {
+      color: saturate($accent, 20%);
+    }
+  }
+}

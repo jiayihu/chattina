@@ -3,8 +3,9 @@
 }
 
 body {
-  background-color: #614385;
-  background-image: linear-gradient(to left, #fd746c , #ff9068);
+  background-attachment: fixed;
+  background-color: $gray-dark;
+  background-image: linear-gradient(180deg, $accent , desaturate($primary, 10%));
   color: $text;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 16px;
@@ -32,4 +33,8 @@ h1 {
   font-weight: 300;
   margin: 0;
   text-transform: uppercase;
+}
+
+img {
+  max-width: 100%;
 }

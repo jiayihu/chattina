@@ -1,23 +1,60 @@
+$dots-radius: 5px;
+
 .nav {
+  flex-basis: 7.5rem;
   padding-left: 1em;
   text-align: left;
 }
 
+.toggle-list {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  width: $dots-radius * 7;
+
+  &:focus {
+    outline: none;
+  }
+
+  .dot {
+    background: $white;
+    border-radius: 100%;
+    display: block;
+    height: $dots-radius;
+    position: relative;
+    width: $dots-radius;
+
+    &:not(:last-child) {
+      margin-bottom: 4px;
+    }
+
+    &::after {
+      background-color: $white;
+      content: '';
+      display: block;
+      height: $dots-radius / 2;
+      left: $dots-radius + 2;
+      position: absolute;
+      top: 2px;
+      width: $dots-radius * 4;
+    }
+  }
+}
+
 .title {
+  flex-grow: 1;
 
   h1 {
     font-size: 1.5em;
-    line-height: 10vh;
+    letter-spacing: 1px;
   }
 }
 
 .account {
+  flex-basis: 7.5rem;
   padding-right: 1em;
-  padding-top: 1.3em;
-  position: absolute;
-  right: 0;
   text-align: right;
-  top: 0;
 
   .sign {
     cursor: pointer;

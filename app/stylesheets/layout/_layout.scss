@@ -8,6 +8,12 @@
 
   @media (min-width: $screen-phone) {
     max-width: $screen-tablet;
+    width: 90%;
+  }
+
+  @media (min-width: $screen-tablet) {
+    max-width: $screen-desktop;
+    width: 80%;
   }
 }
 
@@ -26,9 +32,11 @@
 }
 
 .head {
-  background-color: darken($primary-dark, 20%);
-  background-image: linear-gradient(30deg, darken($primary-dark, 10%) , darken($primary-dark, 30%));
-  color: #fff;
+  align-items: center;
+  background-color: $gray-dark;
+  background-image: linear-gradient(90deg, $primary, $gray-dark);
+  color: $white;
+  display: flex;
   height: 10vh;
   min-height: 48px;
   position: relative;
@@ -37,9 +45,24 @@
 .content {
   display: flex;
   height: 90vh;
+  position: relative;
 
   @media(min-width: $screen-tablet) {
     height: calc(90vh - 2em);
+  }
+
+  .left {
+    background-color: $gray-dark;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    @media(min-width: $screen-phone) {
+      flex-basis: 25%;
+      position: static;
+    }
   }
 
   .right {

@@ -36,7 +36,6 @@
   }
 
   .box {
-    border-radius: 0 0 3px 3px;
     display: flex;
     flex-shrink: 0; //Fix for older Chrome versions: to be sure that it will not shrink when .msgs overflows
     height: 3.125rem;
@@ -45,9 +44,8 @@
     width: 100%;
 
     &__input {
-      background-color: darken($primary, 20%);
+      background-color: darken($gray-dark, 5%);
       border: 0;
-      border-bottom-left-radius: 2px;
       color: $gray-light;
       flex-grow: 1;
       padding: 1em;
@@ -60,7 +58,6 @@
     button {
       background-color: $primary;
       border: 0;
-      border-bottom-right-radius: 2px;
       color: #fff;
       font-size: 1.2em;
       -moz-osx-font-smoothing: grayscale;
