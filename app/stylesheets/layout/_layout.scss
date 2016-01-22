@@ -57,11 +57,18 @@
     left: 0;
     position: absolute;
     top: 0;
+    transform: translateX(-100vw);
+    transition: transform .6s cubic-bezier(.6, -.28, .74, .05);
     width: 100%;
 
-    @media(min-width: $screen-phone) {
+    &.visible {
+      transform: none;
+    }
+
+    @media(min-width: $screen-tablet) {
       flex-basis: 25%;
       position: static;
+      transform: none;
     }
   }
 

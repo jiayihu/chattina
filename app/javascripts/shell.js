@@ -11,6 +11,7 @@ var model = require('./model');
 var pubSub = require('pubsub-js');
 
 /* Features */
+var peopleList = require('./features/people-list');
 var account = require('./features/account');
 
 var configMap = {
@@ -78,6 +79,9 @@ var init = function() {
   if(isTesting) {
     _testing();
   }
+
+  //people-list
+  peopleList.init();
 
   //Account
   stateMap.account = document.getElementsByClassName('account')[0];
