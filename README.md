@@ -11,3 +11,10 @@ This is not meant to be used for any production since it doesn't provide polyfil
 
 ##Browser Support
  - Evergreen browsers (IE10+)
+
+##Documentation
+
+Javascript files are commented with [JSDoc 3](https://github.com/jsdoc3/jsdoc)
+```
+jsdoc app/javascripts -r -d docs
+```
