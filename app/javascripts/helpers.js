@@ -1,6 +1,6 @@
 /**
- * [function description]
- * @param  {Function} callback Callback
+ * Helpers module
+ * @module helpers
  */
 
 var notie = require('notie');
@@ -14,8 +14,7 @@ var makeError = function(msg) {
 
 /**
  * Runs callback function when DOM is ready (JQuery function)
- * @param  {Function} callback [description]
- * @return {[type]}
+ * @param  {function} callback [description]
  */
 var $ready = function(callback) {
   if(document.readyState !== 'loading') {
@@ -50,8 +49,12 @@ var init = function() {
 };
 
 module.exports = {
+  /** init helpers module for things like changing DOM prototype*/
   init: init,
+  /** Show an error to the user */
   makeError: makeError,
+  /** JQuery $.ready function */
   $ready: $ready,
+  /** Set the configMap of the module - It goes deep in the object */
   setConfigMap: setConfigMap
 };

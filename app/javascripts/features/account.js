@@ -1,3 +1,8 @@
+/**
+ * Account log-in/out module
+ * @module features/account
+ */
+
 'use strict';
 
 var stateMap = {
@@ -22,6 +27,8 @@ var init = function(account) {
 };
 
 module.exports = {
+  /** bind external event listeners to module DOM events */
   bind: bind,
+  /** init account feature */
   init: init
 };
