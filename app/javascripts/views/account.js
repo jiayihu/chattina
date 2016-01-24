@@ -8,8 +8,8 @@
 var pubSub = require('pubsub-js');
 
 var stateMap = {
-  account: null,
-  sign: null
+  accountHTML: null,
+  signHTML: null
 };
 
 /**
@@ -17,11 +17,11 @@ var stateMap = {
  */
 
 var _onAccountLogin = function(msg, currentUser) {
-  stateMap.sign.textContent = currentUser.name;
+  stateMap.signHTML.textContent = currentUser.name;
 };
 
 var _onAccountLogout = function() {
-  stateMap.sign.textContent = 'Please sign-in';
+  stateMap.signHTML.textContent = 'Please signHTML-in';
 };
 
 /**
@@ -35,13 +35,13 @@ var _onAccountLogout = function() {
  */
 var bind = function(event, callback) {
   if(event === 'onSignClick') {
-    stateMap.sign.addEventListener('click', callback);
+    stateMap.signHTML.addEventListener('click', callback);
   }
 };
 
 var init = function(container) {
-  stateMap.account = container;
-  stateMap.sign = stateMap.account.getElementsByClassName('sign')[0];
+  stateMap.accountHTML = container;
+  stateMap.signHTML = stateMap.accountHTML.getElementsByClassName('sign')[0];
 
   pubSub.subscribe('login', _onAccountLogin);
   pubSub.subscribe('logout', _onAccountLogout);

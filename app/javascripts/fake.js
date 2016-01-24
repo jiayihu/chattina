@@ -43,6 +43,35 @@ var peopleList = [
 ];
 
 /**
+ * Fake Socket.IO API
+ */
+var fakeIdSerial = 6;
+var callbackMap = {};
+var timeoutID;
+
+var _makeFakeId = function() {
+  return 'id_' + String(fakeIdSerial+=1);
+};
+
+/**
+ * Tries to send a fake msg to the client every 4s until success
+ */
+var emitMockMsg = function() {
+  window.setTimeout(function() {
+    if(callbackMap.updateChat) {
+      callbackMap.updateChat({
+        destId: 'id_7',
+        destName: 'Alfred',
+        senderId: 'id_4',
+        msgText: 'Hi there from Arya!'
+      });
+    } else {
+      emitMockMsg();
+    }
+  }, 4000);
+};
+
+/**
  * Tries to send a fake new peopleList to the client every 1s until success.
  * This should be successful only after user has logged in.
  */
@@ -56,17 +85,6 @@ var sendListChange = function() {
       sendListChange();
     }
   }, 1000);
-};
-
-/**
- * Fake Socket.IO API
- */
-var fakeIdSerial = 6;
-var callbackMap = {};
-var timeoutID;
-
-var _makeFakeId = function() {
-  return 'id_' + String(fakeIdSerial+=1);
 };
 
 /**
@@ -120,24 +138,6 @@ var mockSio = {
     }
 
   }
-};
-
-/**
- * Tries to send a fake msg to the client every 4s until success
- */
-var emitMockMsg = function() {
-  window.setTimeout(function() {
-    if(callbackMap.updateChat) {
-      callbackMap.updateChat({
-        destId: 'id_7',
-        destName: 'Alfred',
-        senderId: 'id_4',
-        msgText: 'Hi there from Arya!'
-      });
-    } else {
-      emitMockMsg();
-    }
-  }, 4000);
 };
 
 var init = function() {
