@@ -4,7 +4,7 @@
 
 #Chattina *Work still in progress*
 
-An [MVP](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvp) (slightly different from MVC) Chat, built in native Javascript for fun and learning. No JQuery/MV* Framework dependency.
+An MVC Chat, built in native Javascript for fun and learning. No JQuery/MV* Framework dependency.
 
 >This is not meant to be used for any production since it doesn't provide polyfills to old browsers. I'm using for instance CSS Flexbox and Viewport units.
 

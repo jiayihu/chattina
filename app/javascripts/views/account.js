@@ -5,10 +5,28 @@
 
 'use strict';
 
+var pubSub = require('pubsub-js');
+
 var stateMap = {
   account: null,
   sign: null
 };
+
+/**
+ * PRIVATE FUNCTIONS
+ */
+
+var _onAccountLogin = function(msg, currentUser) {
+  stateMap.sign.textContent = currentUser.name;
+};
+
+var _onAccountLogout = function() {
+  stateMap.sign.textContent = 'Please sign-in';
+};
+
+/**
+ * PUBLIC FUNCTIONS
+ */
 
 /**
  * Binds event handlers from shell to DOM events
@@ -21,9 +39,12 @@ var bind = function(event, callback) {
   }
 };
 
-var init = function(account) {
-  stateMap.account = account;
+var init = function(container) {
+  stateMap.account = container;
   stateMap.sign = stateMap.account.getElementsByClassName('sign')[0];
+
+  pubSub.subscribe('login', _onAccountLogin);
+  pubSub.subscribe('logout', _onAccountLogout);
 };
 
 module.exports = {

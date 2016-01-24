@@ -11,8 +11,8 @@ var model = require('./model');
 var pubSub = require('pubsub-js');
 
 /* Features */
-var peopleList = require('./features/people-list');
-var account = require('./features/account');
+var peopleList = require('./views/people-list');
+var account = require('./views/account');
 
 var configMap = {
 
@@ -55,18 +55,6 @@ var _onSignClick = function() {
   return false;
 };
 
-var _onAccountLogin = function(msg, currentUser) {
-  stateMap.account
-    .getElementsByClassName('sign')[0]
-    .textContent = currentUser.name;
-};
-
-var _onAccountLogout = function() {
-  stateMap.account
-    .getElementsByClassName('sign')[0]
-    .textContent = 'Please sign-in';
-};
-
 /**
  * PUBLIC FUNCTIONS
  */
@@ -87,8 +75,6 @@ var init = function() {
   stateMap.account = document.getElementsByClassName('account')[0];
   account.init(stateMap.account);
   account.bind('onSignClick', _onSignClick);
-  pubSub.subscribe('login', _onAccountLogin);
-  pubSub.subscribe('logout', _onAccountLogout);
 };
 
 module.exports = {
