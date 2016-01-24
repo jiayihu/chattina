@@ -1,8 +1,10 @@
+[![David](https://david-dm.org/jiayihu/chattina.svg)](https://david-dm.org/jiayihu/chattina.svg)
+
 #Chattina *Work still in progress*
 
-An MVP (slightly different from MVC) Chat, built in native Javascript for fun and learning. No JQuery/MV* Framework dependency.
+An [MVP](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailmvp) (slightly different from MVC) Chat, built in native Javascript for fun and learning. No JQuery/MV* Framework dependency.
 
-This is not meant to be used for any production since it doesn't provide polyfills to old browsers. I'm using for instance CSS Flexbox and Viewport units.
+>This is not meant to be used for any production since it doesn't provide polyfills to old browsers. I'm using for instance CSS Flexbox and Viewport units.
 
 ##Main libraries used:
  - [Page.js](https://github.com/visionmedia/page.js) for routing and hash management
@@ -14,7 +16,7 @@ This is not meant to be used for any production since it doesn't provide polyfil
 
 ##Documentation
 
-Javascript files are commented with [JSDoc 3](https://github.com/jsdoc3/jsdoc)
+Javascript files are commented with [JSDoc 3](https://github.com/jsdoc3/jsdoc) format, therefore you can generate automatic API documentation by running the following command:
 ```
 jsdoc app/javascripts -r -d docs
 ```
