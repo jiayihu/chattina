@@ -1,7 +1,7 @@
 var gulp         = require('gulp');
 var runSequence = require('run-sequence');
 
-var productionTask = function(cb) {
+var productionTask = function() {
   runSequence(
     'clean',
     ['fonts', 'images', 'static'],
