@@ -1,4 +1,5 @@
 [![David](https://david-dm.org/jiayihu/chattina.svg)](https://david-dm.org/jiayihu/chattina.svg) ![Love](https://img.shields.io/badge/Made%20with-%E2%99%A5-red.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/32903457402d47f2bb1fc5d544701458)](https://www.codacy.com/app/steph-jiayi/chattina)
 
 #Chattina *Work still in progress*
 
