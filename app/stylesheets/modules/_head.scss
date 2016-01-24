@@ -17,6 +17,10 @@ $dots-radius: 5px;
     outline: none;
   }
 
+  @media(min-width: $screen-tablet) {
+    display: none;
+  }
+
   .dot {
     background: $white;
     border-radius: 100%;
@@ -29,6 +33,7 @@ $dots-radius: 5px;
       margin-bottom: 4px;
     }
 
+    //Lines next to the dots
     &::after {
       background-color: $white;
       content: '';
