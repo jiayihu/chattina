@@ -1,4 +1,6 @@
 {
+  "env": "development",
+
   "root": {
     "src": "./app",
     "dest": "./public"

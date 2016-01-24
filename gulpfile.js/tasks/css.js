@@ -20,7 +20,7 @@ var cssTask = function () {
     .on('error', sass.logError)
     .pipe(autoprefixer(config.tasks.css.autoprefixer))
     .pipe(sourcemaps.write('./maps'))
-    .pipe(gulpif(process.env.NODE_ENV === 'production', minifyCss()))
+    .pipe(gulpif(config.env === 'production', minifyCss()))
     .pipe(gulp.dest(paths.dest))
     .pipe(browserSync.stream({match: '**/*.css'}));
 };

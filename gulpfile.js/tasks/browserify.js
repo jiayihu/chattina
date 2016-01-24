@@ -16,7 +16,7 @@ var paths = {
   dest: path.join(config.root.dest, config.tasks.scripts.dest)
 };
 
-var isProduction = process.env.NODE_ENV === 'production';
+var isProduction = config.env === 'production';
 var customOpts = {
   entries: paths.src,
   debug: isProduction? false : true
