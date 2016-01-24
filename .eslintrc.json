@@ -21,6 +21,9 @@
         ],
         "no-unused-vars": [
           1
+        ],
+        "no-use-before-define": [
+          2
         ]
     },
     "env": {

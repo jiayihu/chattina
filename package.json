@@ -1,7 +1,7 @@
 {
   "name": "chattina",
   "version": "0.0.1",
-  "description": "MVC Chat in native JS without JQuery or MVC framework",
+  "description": "MVP Chat in native JS without JQuery or MVC framework",
   "scripts": {
     "production": "gulp production",
     "gulp": "gulp",

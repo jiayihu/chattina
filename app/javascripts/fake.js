@@ -43,6 +43,22 @@ var peopleList = [
 ];
 
 /**
+ * Tries to send a fake new peopleList to the client every 1s until success.
+ * This should be successful only after user has logged in.
+ */
+var sendListChange = function() {
+  timeoutID = window.setTimeout(function() {
+    if(callbackMap.listChange) {
+      callbackMap.listChange(peopleList);
+      emitMockMsg();
+      window.clearTimeout(timeoutID);
+    } else {
+      sendListChange();
+    }
+  }, 1000);
+};
+
+/**
  * Fake Socket.IO API
  */
 var fakeIdSerial = 6;
@@ -122,22 +138,6 @@ var emitMockMsg = function() {
       emitMockMsg();
     }
   }, 4000);
-};
-
-/**
- * Tries to send a fake new peopleList to the client every 1s until success.
- * This should be successful only after user has logged in.
- */
-var sendListChange = function() {
-  timeoutID = window.setTimeout(function() {
-    if(callbackMap.listChange) {
-      callbackMap.listChange(peopleList);
-      emitMockMsg();
-      window.clearTimeout(timeoutID);
-    } else {
-      sendListChange();
-    }
-  }, 1000);
 };
 
 var init = function() {

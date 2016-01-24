@@ -26,6 +26,9 @@ var stateMap = {
 };
 var isFakeData = true;
 
+/* Exported variables hoisting, used also in internal functions before their formal declaration */
+var people, chat, init;
+
 /**
  * PRIVATE FUNCTIONS
  */
@@ -54,7 +57,7 @@ var _makePerson = function(personMap) {
   var name = personMap.name;
   var avatar = personMap.avatar;
 
-  if(cid === undefined || !name) {
+  if( !cid || !name) {
     throw 'Client id and name are required';
   }
 
@@ -185,7 +188,7 @@ var _publishUpdateChat = function(msg) {
  * Object with methods relevant to 'people' such as peopleDb, log-in/out etc.
  * @type {Object}
  */
-var people = {
+people = {
   clearDb: function() {
     var currentUser = stateMap.currentUser;
 
@@ -253,7 +256,7 @@ var people = {
  * Object with methods relevant to the chat such as join, set/get chatee, sendMsg
  * @type {Object}
  */
-var chat = {
+chat = {
   /**
    * Gets the current chatee
    * @return {object}
@@ -350,7 +353,7 @@ var chat = {
   }
 };
 
-var init = function() {
+init = function() {
   stateMap.anonUser = _makePerson({
     cid: configMap.anonId,
     id: configMap.anonId,
