@@ -3,6 +3,23 @@
   flex-direction: column;
   flex-grow: 1;
 
+  .chatee {
+    align-items: center;
+    border-bottom: 1px solid rgba($gray-light, .4);
+    display: flex;
+    padding: 1.5rem 1rem;
+
+    &__avatar {
+      @include avatar;
+      border-color: $accent;
+    }
+
+    &__name {
+      font-weight: normal;
+      padding-left: .625rem;
+    }
+  }
+
   .msgs {
     flex-grow: 1;
     overflow: auto;

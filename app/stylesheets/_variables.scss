@@ -2,7 +2,7 @@
 $primary: #e84a5f;
 $primary-dark: darken($primary, 30%);
 $primary-light: #ff847c;
-$accent: #99b898;
+$accent: #89c987;
 $accent-secondary: #fecea8;
 
 $gray: #727272;
@@ -20,3 +20,11 @@ $screen-phone: 480px;
 $screen-tablet: 768px;
 $screen-desktop: 992px;
 $screen-lg-desktop: 1200px;
+
+@mixin avatar {
+  border-width: 3px;
+  border-radius: 50%;
+  border-style: solid;
+  max-height: 54px;
+  max-width: 54px;
+}

@@ -6,7 +6,7 @@
 'use strict';
 
 var fake = require('./fake'); //Fake data
-var localforage = require('localforage');
+var localforage = require('localforage'); //Browser data storage
 var pubSub = require('pubsub-js');
 
 var configMap = {
@@ -280,6 +280,7 @@ chat = {
     var sio = fake.mockSio;
 
     if(stateMap.isConnected) {
+      console.log('User is already chatting with ' + stateMap.chatee.name);
       return false;
     }
 

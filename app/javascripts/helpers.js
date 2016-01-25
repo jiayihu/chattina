@@ -44,14 +44,34 @@ var setConfigMap = function(inputMap, configMap) {
   }
 };
 
+/**
+ * Finds the parent node with given class
+ * @param  @type {HTMLElement} child Element whose parent is looked for
+ * @param  {string} parentClass Classname of the parent node
+ * @return @type {HTMLElement}
+ */
+var findParent = function(child, parentClass) {
+  if(!child.parentNode) {
+    return;
+  }
+
+  if(child.parentNode.classList.contains(parentClass)) {
+    return child.parentNode;
+  }
+
+  return findParent(child.parentNode, parentClass);
+};
+
 var init = function() {
   Document.prototype.qs = Document.prototype.querySelector;
   Element.prototype.qs = Element.prototype.querySelector;
 };
 
 module.exports = {
-  /** init helpers module for things like changing DOM prototype*/
+  /** Init helpers module for things like changing DOM prototype*/
   init: init,
+  /** Find the parent node with given class */
+  findParent: findParent,
   /** Show an error to the user */
   makeError: makeError,
   /** JQuery $.ready function */

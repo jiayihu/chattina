@@ -1,5 +1,8 @@
 /**
- * Shell module
+ * Controller module.
+ * This is the unique master controller, with tiny controllers for each view.
+ * Our project is not large scaled, so our controllers can all stay together
+ * happily like a family.
  * @module shell
  */
 
@@ -12,13 +15,11 @@ var pubSub = require('pubsub-js');
 
 /* Features */
 var peopleList = require('./views/people-list');
+var chat = require('./views/chat');
 var account = require('./views/account');
 
 var configMap = {
 
-};
-var stateMap = {
-  account: null
 };
 var isTesting = false;
 
@@ -33,9 +34,9 @@ var _testing = function() {
   });
 };
 
-/**
- * FEATURES EVENTS SUBSCRIBERS
- */
+///////////////////////////
+// VIEWS EVENTS HANDLERS //
+///////////////////////////
 
 
 /* ACCOUNT */
@@ -46,13 +47,45 @@ var _onSignClick = function() {
 
   if(currentUser.getIsAnon()) {
     userName = prompt('Please sign-in');
-    model.people.login(userName);
-    this.textContent = '... Processing ...';
+    if(userName) {
+      model.people.login(userName);
+      this.textContent = '... Processing ...';
+    }
   } else {
     model.people.logout();
   }
 
   return false;
+};
+
+
+/* PEOPLE LIST */
+
+var onSetChatee = function(personId) {
+  model.chat.setChatee(personId);
+};
+
+
+/* CHAT */
+
+var onSubmitMsg = function(msgText) {
+  model.chat.sendMsg(msgText);
+};
+
+
+////////////////////////////////////
+// RENDER VIEWS WHEN USER LOGS IN //
+////////////////////////////////////
+
+
+var onLogin = function() {
+  console.log('Login event, started controller \'onLogin\'');
+  //people-list
+  peopleList.bind('setChatee', onSetChatee);
+
+  //chat
+  chat.init();
+  chat.bind('submitMsg', onSubmitMsg);
 };
 
 /**
@@ -68,13 +101,16 @@ var init = function() {
     _testing();
   }
 
-  //people-list
+  //Account
+  account.init();
+  account.bind('onSignClick', _onSignClick);
+
+  //People list
   peopleList.init();
 
-  //Account
-  stateMap.account = document.getElementsByClassName('account')[0];
-  account.init(stateMap.account);
-  account.bind('onSignClick', _onSignClick);
+  //When user is logged in
+  pubSub.subscribe('login', onLogin);
+
 };
 
 module.exports = {

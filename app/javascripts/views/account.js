@@ -24,9 +24,9 @@ var _onAccountLogout = function() {
   stateMap.signHTML.textContent = 'Please signHTML-in';
 };
 
-/**
- * PUBLIC FUNCTIONS
- */
+//////////////////////
+// PUBLIC FUNCTIONS //
+//////////////////////
 
 /**
  * Binds event handlers from shell to DOM events
@@ -39,8 +39,8 @@ var bind = function(event, callback) {
   }
 };
 
-var init = function(container) {
-  stateMap.accountHTML = container;
+var init = function() {
+  stateMap.accountHTML = document.getElementsByClassName('account')[0];
   stateMap.signHTML = stateMap.accountHTML.getElementsByClassName('sign')[0];
 
   pubSub.subscribe('login', _onAccountLogin);
