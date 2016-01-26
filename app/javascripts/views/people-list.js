@@ -9,25 +9,78 @@ var helpers = require('../helpers');
 var pubSub = require('pubsub-js');
 
 var stateMap = {
-  button: null,
+  buttonHTML: null,
   peopleList: null
 };
+
+var personTemplate =
+  '<li class="person {{isChatee}}" data-id="{{id}}">' +
+    '<img src="{{avatar}}" alt="{{name}}" class="person__avatar"/>' +
+    '<span class="person-details">' +
+      '<span class="person__name">{{name}}</span>' +
+    '</span>' +
+  '</li>';
 
 /**
  * Subscriber for 'setChatee' event. Selects the new chatee on the list.
  * @param  {string} msg Event name/Topic
- * @param  {object} data Object map with old and new chatee
+ * @param  {object} argMap Object map with old and new chatee
  */
-var _onSetChatee = function(msg, data) {
-  var oldChatee = data.oldChatee;
-  var newChatee = data.newChatee;
+var _onSetChatee = function(event, argMap) {
+  console.log('_onSetChatee: %o', argMap);
+  var oldChatee = argMap.oldChatee;
+  var newChatee = argMap.newChatee;
 
-  stateMap.peopleList
-    .qs('.person[data-id="' + oldChatee.id + '"]')
-    .classList.remove('chatee');
+  if(oldChatee) {
+    stateMap.peopleList
+      .qs('.person[data-id="' + oldChatee.id + '"]')
+      .classList.remove('person--chatee');
+  }
   stateMap.peopleList
     .qs('.person[data-id="' + newChatee.id + '"]')
-    .classList.add('chatee');
+    .classList.add('person--chatee');
+
+  return true;
+};
+
+/**
+ * Subscriber for 'listChange' event. Renders the new people-list and
+ * highlights the chatee if defined
+ * @param  {string} msg Event name/Topic
+ * @param  {object} argMap Object map with 'newPeopleDb' and 'chatee'
+ */
+var _onListChange = function(event, argMap) {
+  var newPeopleDb = argMap.newPeopleDb;
+  var chatee = argMap.chatee;
+  var listHTML = '';
+  var person, personHTML, chateeClass;
+
+  for(var cid in newPeopleDb) {
+    person = newPeopleDb[cid];
+    personHTML = personTemplate;
+    chateeClass = '';
+
+    if( person.getIsAnon() || person.getIsUser() ) {
+      continue;
+    }
+
+    if( chatee && chatee.id === person.id ) {
+      chateeClass = 'person--chatee';
+    }
+
+    personHTML = personHTML.replace(/{{name}}/g, person.name);
+    personHTML = personHTML.replace('{{id}}', person.id);
+    personHTML = personHTML.replace('{{avatar}}', person.avatar);
+    personHTML = personHTML.replace('{{isChatee}}', chateeClass);
+
+    listHTML += personHTML;
+  }
+
+  if(!listHTML) {
+    listHTML = 'No one is online.';
+  }
+
+  stateMap.peopleList.innerHTML = listHTML;
 
   return true;
 };
@@ -70,14 +123,15 @@ var bind = function(eventName, eventHandler) {
 };
 
 var init = function() {
-  stateMap.button = document.getElementsByClassName('toggle-list')[0];
+  stateMap.buttonHTML = document.getElementsByClassName('toggle-list')[0];
   stateMap.peopleList = document.qs('.content .people-list');
 
-  stateMap.button.addEventListener('click', function() {
+  stateMap.buttonHTML.addEventListener('click', function() {
     stateMap.peopleList.parentNode.classList.toggle('visible');
   });
 
   pubSub.subscribe('setChatee', _onSetChatee);
+  pubSub.subscribe('listChange', _onListChange);
 };
 
 module.exports = {

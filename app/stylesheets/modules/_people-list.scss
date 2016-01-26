@@ -13,6 +13,10 @@
     border-color: rgba($gray, .3);
   }
 
+  &--chatee &__avatar {
+    border-color: $accent;
+  }
+
   &-details {
     padding-left: .625rem;
   }

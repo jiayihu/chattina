@@ -5,7 +5,13 @@
 
 'use strict';
 
+var pubSub = require('pubsub-js');
+
 var stateMap = {
+  chatHTML: null,
+  chateeHTML: null,
+  chateeNameHTML: null,
+  chateeAvatarHTML: null,
   msgsHTML: null,
   sendFormHTML: null
 };
@@ -71,6 +77,67 @@ var _clearChat = function() {
   }
 };
 
+///////////////////////
+// EVENT SUBSCRIBERS //
+///////////////////////
+
+/**
+ * Subscriber for 'setChatee' event. Selects the new chatee on the list.
+ * @param  {string} msg Event name/Topic
+ * @param  {object} argMap Object map with old and new chatee
+ */
+var _onSetChatee = function(event, argMap) {
+  var oldChatee = argMap.oldChatee;
+  var newChatee = argMap.newChatee;
+
+  if(!newChatee) {
+    if(oldChatee) {
+      _writeAlert( oldChatee.name + ' has left the chat.' );
+    } else {
+      _writeAlert('Your friend has left the chat');
+    }
+
+    return true;
+  }
+
+  _writeAlert('Now chatting with ' + newChatee.name);
+  stateMap.chateeNameHTML.textContent = newChatee.name;
+  stateMap.chateeAvatarHTML.setAttribute('src', newChatee.avatar);
+
+  return true;
+};
+
+/**
+ * Subscriber for 'updateChat' event. Updates the chat log with the new msg.
+ * @param  {string} msg Event name/Topic
+ * @param  {object} msg Object map with old and new chatee
+ * @example msg = {
+ *   destId: msg.destId,
+ *   destName: msg.destName,
+ *   msgText: msg.msgText,
+ *   isSenderUser: isSenderUser,
+ *   sender: sender
+ * }
+ */
+var _onUpdateChat = function(event, msg) {
+  if( !msg.sender ) {
+    _writeAlert(msg.msgText);
+    return false;
+  }
+
+  _writeChat(msg.sender.name, msg.msgText, msg.isSenderUser);
+
+  return true;
+};
+
+/**
+ * Subscriber for 'updateChat' event. Empties the chat.
+ */
+var _onLogout = function() {
+  stateMap.chateeNameHTML.textContent = 'Nobody';
+  _clearChat();
+};
+
 //////////////////////
 // PUBLIC FUNCTIONS //
 //////////////////////
@@ -83,7 +150,6 @@ var _clearChat = function() {
  */
 var bind = function(eventName, eventHandler) {
   if(eventName === 'submitMsg') {
-    stateMap.sendFormHTML = stateMap.msgsHTML.nextElementSibling;
     stateMap.sendFormHTML.addEventListener('submit', function(event) {
       event.preventDefault();
       var msgText = this.getElementsByClassName('box__input')[0].value;
@@ -99,7 +165,16 @@ var bind = function(eventName, eventHandler) {
 };
 
 var init = function() {
-  stateMap.msgsHTML = document.qs('.chat .msgs');
+  stateMap.chatHTML = document.qs('.chat');
+  stateMap.chateeHTML = stateMap.chatHTML.getElementsByClassName('chatee')[0];
+  stateMap.chateeNameHTML = stateMap.chateeHTML.getElementsByClassName('chatee__name')[0];
+  stateMap.chateeAvatarHTML = stateMap.chateeHTML.getElementsByClassName('chatee__avatar')[0];
+  stateMap.msgsHTML = stateMap.chatHTML.qs('.chat .msgs');
+  stateMap.sendFormHTML = stateMap.msgsHTML.nextElementSibling;
+
+  pubSub.subscribe('setChatee', _onSetChatee);
+  pubSub.subscribe('updateChat', _onUpdateChat);
+  pubSub.subscribe('logout', _onLogout);
 };
 
 module.exports = {

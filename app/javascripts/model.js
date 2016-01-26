@@ -122,6 +122,8 @@ var _updateList = function(peopleList) {
   if(stateMap.chatee && !isChateeonline) {
     chat.setChatee('');
   }
+
+  return stateMap.peopleDb;
 };
 
 /**
@@ -164,11 +166,31 @@ var _completeLogin = function(userList) {
  */
 var _publishListChange = function(peopleList) {
   _updateList(peopleList);
-  pubSub.publish('listChange', peopleList);
+  pubSub.publish('listChange', {
+    newPeopleDb: people.getDb(),
+    chatee: chat.getChatee()
+  });
 };
 
+/**
+ * Publishes the 'updateChat' event with relevant data for the view
+ * @param  {object} msg Object map with data about the msg
+ * @example _publishUpdateChat({
+ *   destId: stateMap.chatee.id,
+ *   destName: stateMap.chatee.name,
+ *   senderId: stateMap.currentUser.id,
+ *   msgText: msgText
+ * })
+ */
 var _publishUpdateChat = function(msg) {
-  console.log(msg);
+  console.log('New msg from backend: %o', msg);
+  var sender = people.getByCid(msg.senderId);
+  var isSenderUser = false;
+
+  if(sender) {
+    isSenderUser = sender.getIsUser();
+  }
+
   //If user is not chatting with anyone or someone else wrote to us we set a new chatee
   if(
     !stateMap.chatee ||
@@ -177,7 +199,13 @@ var _publishUpdateChat = function(msg) {
     chat.setChatee(msg.senderId);
   }
 
-  pubSub.publish('updateChat', msg);
+  pubSub.publish('updateChat', {
+    destId: msg.destId,
+    destName: msg.destName,
+    msgText: msg.msgText,
+    isSenderUser: isSenderUser,
+    sender: sender
+  });
 };
 
 /**
@@ -218,7 +246,7 @@ people = {
   },
 
   getDb: function() {
-    return stateMap.peopleDb;
+    return stateMap.peopleCidMap;
   },
 
   login: function(userName) {

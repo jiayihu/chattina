@@ -34,6 +34,7 @@ var _testing = function() {
   });
 };
 
+
 ///////////////////////////
 // VIEWS EVENTS HANDLERS //
 ///////////////////////////
@@ -79,8 +80,8 @@ var onSubmitMsg = function(msgText) {
 
 
 var onLogin = function() {
-  console.log('Login event, started controller \'onLogin\'');
   //people-list
+  peopleList.init();
   peopleList.bind('setChatee', onSetChatee);
 
   //chat
@@ -106,7 +107,6 @@ var init = function() {
   account.bind('onSignClick', _onSignClick);
 
   //People list
-  peopleList.init();
 
   //When user is logged in
   pubSub.subscribe('login', onLogin);

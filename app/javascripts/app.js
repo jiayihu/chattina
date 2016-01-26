@@ -2,7 +2,7 @@
 
 var helpers = require('./helpers');
 var model = require('./model');
-var shell = require('./shell');
+var shell = require('./controller');
 
 var init = function() {
   helpers.init();

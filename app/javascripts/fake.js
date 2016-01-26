@@ -13,7 +13,7 @@ var peopleList = [
   {
     name: 'Daenerys',
     _id: 'id_1',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg'
+    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg'
   },
   {
     name: 'Jon',
@@ -68,7 +68,7 @@ var emitMockMsg = function() {
     } else {
       emitMockMsg();
     }
-  }, 4000);
+  }, 2000);
 };
 
 /**
