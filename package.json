@@ -2,6 +2,7 @@
   "name": "chattina",
   "version": "0.0.1",
   "description": "MVC Chat in vanilla JS without JQuery or MVC framework",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/jiayihu/chattina.git"
