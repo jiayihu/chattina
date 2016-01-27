@@ -13,25 +13,19 @@ var model = require('./model');
 // var page = require('page');
 var pubSub = require('pubsub-js');
 
-/* Features */
-var peopleList = require('./views/people-list');
-var chat = require('./views/chat');
-var account = require('./views/account');
+/* Views */
+var views = {};
+views.peopleList = require('./views/people-list');
+views.chat = require('./views/chat');
+views.account = require('./views/account');
 
 var configMap = {
 
 };
-var isTesting = false;
+var isTesting = true;
 
 var _testing = function() {
-  pubSub.subscribe('login', function(msg, data) {
-    console.log(msg + ': ');
-    console.log(data);
-  });
-  pubSub.subscribe('logout', function(msg, data) {
-    console.log(msg + ': ');
-    console.log(data);
-  });
+  model.people.login('Alfred');
 };
 
 
@@ -75,18 +69,18 @@ var onSubmitMsg = function(msgText) {
 
 
 ////////////////////////////////////
-// RENDER VIEWS WHEN USER LOGS IN //
+// RENDERING VIEWS WHEN USER LOGS IN //
 ////////////////////////////////////
 
 
 var onLogin = function() {
   //people-list
-  peopleList.init();
-  peopleList.bind('setChatee', onSetChatee);
+  views.peopleList.init();
+  views.peopleList.bind('setChatee', onSetChatee);
 
   //chat
-  chat.init();
-  chat.bind('submitMsg', onSubmitMsg);
+  views.chat.init();
+  views.chat.bind('submitMsg', onSubmitMsg);
 };
 
 /**
@@ -98,18 +92,18 @@ var configModule = function(inputMap) {
 };
 
 var init = function() {
-  if(isTesting) {
-    _testing();
-  }
-
   //Account
-  account.init();
-  account.bind('onSignClick', _onSignClick);
+  views.account.init();
+  views.account.bind('onSignClick', _onSignClick);
 
   //People list
 
   //When user is logged in
   pubSub.subscribe('login', onLogin);
+
+  if(isTesting) {
+    _testing();
+  }
 
 };
 

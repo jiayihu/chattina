@@ -19,6 +19,7 @@
 
   &-details {
     padding-left: .625rem;
+    text-align: left;
   }
 
   &__name,
@@ -31,11 +32,4 @@
     font-weight: 400;
   }
 
-  &__status {
-    text-align: left;
-
-    &--online {
-      color: $accent;
-    }
-  }
 }

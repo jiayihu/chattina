@@ -33,6 +33,8 @@
 
     li {
       border-radius: 2px;
+      border-style: solid;
+      border-width: 1px;
       margin-bottom: 5px;
       padding: .725em 1em;
     }
@@ -40,16 +42,21 @@
 
   .msg--received li {
     align-self: flex-start;
-    background-color: rgba($gray-light, .1);
-    border: 1px solid rgba($gray-light, .4);
+    background-color: rgba($primary, .1);
+    border-color: rgba($primary, .15);
     text-align: left;
   }
 
   .msg--sent li {
     align-self: flex-end;
-    background-color: rgba($primary, .1);
-    border: 1px solid rgba($primary, .15);
+    background-color: rgba($accent, .2);
+    border-color: rgba($accent, .35);
     text-align: right;
+  }
+
+  .msg--alert li {
+    background-color: rgba($accent-secondary, .3);
+    border-color: rgba($accent-secondary, .45);
   }
 
   .box {

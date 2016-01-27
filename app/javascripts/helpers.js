@@ -62,12 +62,46 @@ var findParent = function(child, parentClass) {
   return findParent(child.parentNode, parentClass);
 };
 
+/**
+ * Animate the property of a DOM element
+ * @param  {Object} element DOM Element
+ * @param  {string} property Property name
+ * @param  {number} value Final property value
+ * @param  {number} time Animation duration
+ */
+var animate = function(element, property, value, time) {
+  var start;
+  var initialValue = element[property];
+  if(initialValue === undefined) {
+    throw new Error(property + ' cannot be found.');
+  }
+
+  var step = function(timestamp) {
+    if(!start) {
+      start = timestamp;
+    }
+
+    var progress = timestamp - start;
+    var tick = time / value;
+
+    element[property] = Math.min(initialValue + progress/tick, value);
+
+    if(progress < time) {
+      window.requestAnimationFrame(step);
+    }
+  };
+
+  window.requestAnimationFrame(step);
+};
+
 var init = function() {
   Document.prototype.qs = Document.prototype.querySelector;
   Element.prototype.qs = Element.prototype.querySelector;
 };
 
 module.exports = {
+  /** Animate a property */
+  animate: animate,
   /** Init helpers module for things like changing DOM prototype*/
   init: init,
   /** Find the parent node with given class */

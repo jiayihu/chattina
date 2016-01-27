@@ -18,6 +18,7 @@ var personTemplate =
     '<img src="{{avatar}}" alt="{{name}}" class="person__avatar"/>' +
     '<span class="person-details">' +
       '<span class="person__name">{{name}}</span>' +
+      '<span class="person__role">{{role}}</span>' +
     '</span>' +
   '</li>';
 
@@ -56,24 +57,27 @@ var _onListChange = function(event, argMap) {
   var person, personHTML, chateeClass;
 
   for(var cid in newPeopleDb) {
-    person = newPeopleDb[cid];
-    personHTML = personTemplate;
-    chateeClass = '';
+    if(newPeopleDb.hasOwnProperty(cid)) {
+      person = newPeopleDb[cid];
+      personHTML = personTemplate;
+      chateeClass = '';
 
-    if( person.getIsAnon() || person.getIsUser() ) {
-      continue;
+      if( person.getIsAnon() || person.getIsUser() ) {
+        continue;
+      }
+
+      if( chatee && chatee.id === person.id ) {
+        chateeClass = 'person--chatee';
+      }
+
+      personHTML = personHTML.replace(/{{name}}/g, person.name);
+      personHTML = personHTML.replace('{{id}}', person.id);
+      personHTML = personHTML.replace('{{avatar}}', person.avatar);
+      personHTML = personHTML.replace('{{role}}', person.role);
+      personHTML = personHTML.replace('{{isChatee}}', chateeClass);
+
+      listHTML += personHTML;
     }
-
-    if( chatee && chatee.id === person.id ) {
-      chateeClass = 'person--chatee';
-    }
-
-    personHTML = personHTML.replace(/{{name}}/g, person.name);
-    personHTML = personHTML.replace('{{id}}', person.id);
-    personHTML = personHTML.replace('{{avatar}}', person.avatar);
-    personHTML = personHTML.replace('{{isChatee}}', chateeClass);
-
-    listHTML += personHTML;
   }
 
   if(!listHTML) {
@@ -113,7 +117,7 @@ var bind = function(eventName, eventHandler) {
         chateeId = helpers.findParent(event.target, 'person').dataset.id;
       }
 
-      if(!chateeId) {
+      if(chateeId === undefined) {
         return false;
       }
 

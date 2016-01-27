@@ -13,32 +13,38 @@ var peopleList = [
   {
     name: 'Daenerys',
     _id: 'id_1',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg'
+    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg',
+    role: 'guest'
   },
   {
     name: 'Jon',
     _id: 'id_2',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/teclaro/128.jpg'
+    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/teclaro/128.jpg',
+    role: 'guest'
   },
   {
     name: 'Sansa',
     _id: 'id_3',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
+    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
+    role: 'guest'
   },
   {
     name: 'Arya',
     _id: 'id_4',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/nuraika/128.jpg'
+    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/nuraika/128.jpg',
+    role: 'guest'
   },
   {
     name: 'Cersei',
     _id: 'id_5',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg'
+    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg',
+    role: 'guest'
   },
   {
     name: 'Joffrey',
     _id: 'id_6',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/jfkingsley/128.jpg'
+    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/jfkingsley/128.jpg',
+    role: 'guest'
   }
 ];
 
@@ -56,20 +62,22 @@ var _makeFakeId = function() {
 /**
  * Tries to send a fake msg to the client every 4s until success
  */
-var emitMockMsg = function() {
+var emitMockMsg = function(msgText) {
   window.setTimeout(function() {
     if(callbackMap.updateChat) {
       callbackMap.updateChat({
         destId: 'id_7',
         destName: 'Alfred',
         senderId: 'id_4',
-        msgText: 'Hi there from Arya!'
+        msgText: msgText
       });
     } else {
       emitMockMsg();
     }
-  }, 2000);
+  }, 1000);
 };
+
+window.emitMockMsg = emitMockMsg;
 
 /**
  * Tries to send a fake new peopleList to the client every 1s until success.
@@ -79,12 +87,12 @@ var sendListChange = function() {
   timeoutID = window.setTimeout(function() {
     if(callbackMap.listChange) {
       callbackMap.listChange(peopleList);
-      emitMockMsg();
+      emitMockMsg('Hi there from Arya!');
       window.clearTimeout(timeoutID);
     } else {
       sendListChange();
     }
-  }, 1000);
+  }, 500);
 };
 
 /**
@@ -97,10 +105,9 @@ var mockSio = {
     callbackMap[msgType] = callback;
   },
   emit: function(msgType, data) {
-    var person;
     if(msgType === 'addUser' && callbackMap.userupdate) {
       setTimeout(function() {
-        person = {
+        var person = {
           _id: _makeFakeId(),
           name: data.name,
           avatar: data.avatar
@@ -109,14 +116,14 @@ var mockSio = {
         //Add the new user to the list. This is applied also when user logs in.
         peopleList.push(person);
         callbackMap.userupdate([person]);
-      }, 2000);
+        sendListChange();
+      }, 1000);
     }
 
     if(msgType === 'updateAvatar' && callbackMap.listChange) {
       var i = 0;
       for(i = 0; i < peopleList.length; i+=1) {
         if(peopleList[i]._id === data.personId) {
-          console.log(peopleList[i]);
           peopleList[i].avatar = data.avatar;
         }
       }
@@ -126,7 +133,9 @@ var mockSio = {
 
     if(msgType === 'updateChat' && callbackMap.updateChat) {
       setTimeout(function() {
-        callbackMap.updateChat(data);
+        if(data.senderId !== 'id_' + fakeIdSerial) {
+          callbackMap.updateChat(data);
+        }
       }, 2000);
     }
 
@@ -141,7 +150,7 @@ var mockSio = {
 };
 
 var init = function() {
-  sendListChange();
+  // sendListChange();
 };
 
 module.exports = {

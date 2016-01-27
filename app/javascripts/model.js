@@ -56,8 +56,10 @@ var _makePerson = function(personMap) {
   var id = personMap.id;
   var name = personMap.name;
   var avatar = personMap.avatar;
+  var role = personMap.role;
 
-  if( !cid || !name) {
+  // 'cid === undefined' instead of '!cid' because if cid is zero '!cid' returns 1
+  if( cid === undefined || name === undefined ) {
     throw 'Client id and name are required';
   }
 
@@ -65,6 +67,7 @@ var _makePerson = function(personMap) {
   person.cid = cid;
   person.name = name;
   person.avatar = avatar;
+  person.role = role;
 
   if(id) {
     person.id = id;
@@ -109,7 +112,8 @@ var _updateList = function(peopleList) {
       cid: person._id,
       id: person._id,
       name: person.name,
-      avatar: person.avatar
+      avatar: person.avatar,
+      role: person.role
     });
 
     //Update any changes about the chatee (logged in or updated avatar)
@@ -147,6 +151,7 @@ var _updateList = function(peopleList) {
  */
 var _completeLogin = function(userList) {
   var user = userList[0];
+  stateMap.currentUser.cid = user._id;
   stateMap.currentUser.id = user._id;
   stateMap.currentUser.name = user.name;
   stateMap.currentUser.avatar = user.avatar;
@@ -194,7 +199,7 @@ var _publishUpdateChat = function(msg) {
   //If user is not chatting with anyone or someone else wrote to us we set a new chatee
   if(
     !stateMap.chatee ||
-    ( (msg.senderId !== stateMap.currentUser.id) && (msg.senderId !== stateMap.chatee.id) )
+    ( !isSenderUser && (msg.senderId !== stateMap.chatee.id) )
   ) {
     chat.setChatee(msg.senderId);
   }
@@ -308,7 +313,6 @@ chat = {
     var sio = fake.mockSio;
 
     if(stateMap.isConnected) {
-      console.log('User is already chatting with ' + stateMap.chatee.name);
       return false;
     }
 

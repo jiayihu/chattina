@@ -5,6 +5,7 @@
 
 'use strict';
 
+var helpers = require('../helpers');
 var pubSub = require('pubsub-js');
 
 var stateMap = {
@@ -16,9 +17,18 @@ var stateMap = {
   sendFormHTML: null
 };
 
-///////////////////////
-// PRIVATE FUNCTIONS //
-///////////////////////
+///////////////////
+// DOM FUNCTIONS //
+///////////////////
+
+var _setStateMap = function() {
+  stateMap.chatHTML = document.qs('.chat');
+  stateMap.chateeHTML = stateMap.chatHTML.getElementsByClassName('chatee')[0];
+  stateMap.chateeNameHTML = stateMap.chateeHTML.getElementsByClassName('chatee__name')[0];
+  stateMap.chateeAvatarHTML = stateMap.chateeHTML.getElementsByClassName('chatee__avatar')[0];
+  stateMap.msgsHTML = stateMap.chatHTML.qs('.chat .msgs');
+  stateMap.sendFormHTML = stateMap.msgsHTML.nextElementSibling;
+};
 
 /**
  * Appends the new msg to the chat
@@ -48,6 +58,8 @@ var _writeChat = function(personName, text, isUser) {
     stateMap.msgsHTML.appendChild(newMsgWrapper);
   }
 
+  helpers.animate(stateMap.msgsHTML, 'scrollTop', stateMap.msgsHTML.scrollHeight, 500);
+
 };
 
 /**
@@ -64,6 +76,8 @@ var _writeAlert = function(alertText) {
   newMsgWrapper.classList.add('msg--alert');
   newMsgWrapper.appendChild(msgHTML);
   stateMap.msgsHTML.appendChild(newMsgWrapper);
+
+  helpers.animate(stateMap.msgsHTML, 'scrollTop', stateMap.msgsHTML.scrollHeight, 500);
 
 };
 
@@ -106,6 +120,7 @@ var _onSetChatee = function(event, argMap) {
 
   return true;
 };
+
 
 /**
  * Subscriber for 'updateChat' event. Updates the chat log with the new msg.
@@ -152,12 +167,15 @@ var bind = function(eventName, eventHandler) {
   if(eventName === 'submitMsg') {
     stateMap.sendFormHTML.addEventListener('submit', function(event) {
       event.preventDefault();
-      var msgText = this.getElementsByClassName('box__input')[0].value;
+      var textInput = this.getElementsByClassName('box__input')[0];
+      var msgText = textInput.value;
 
       if(msgText.trim() === '') {
         return false;
       }
       eventHandler(msgText);
+      textInput.value = '';
+      textInput.focus();
 
       return true;
     });
@@ -165,12 +183,7 @@ var bind = function(eventName, eventHandler) {
 };
 
 var init = function() {
-  stateMap.chatHTML = document.qs('.chat');
-  stateMap.chateeHTML = stateMap.chatHTML.getElementsByClassName('chatee')[0];
-  stateMap.chateeNameHTML = stateMap.chateeHTML.getElementsByClassName('chatee__name')[0];
-  stateMap.chateeAvatarHTML = stateMap.chateeHTML.getElementsByClassName('chatee__avatar')[0];
-  stateMap.msgsHTML = stateMap.chatHTML.qs('.chat .msgs');
-  stateMap.sendFormHTML = stateMap.msgsHTML.nextElementSibling;
+  _setStateMap();
 
   pubSub.subscribe('setChatee', _onSetChatee);
   pubSub.subscribe('updateChat', _onUpdateChat);

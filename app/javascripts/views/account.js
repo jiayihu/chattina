@@ -21,7 +21,7 @@ var _onAccountLogin = function(msg, currentUser) {
 };
 
 var _onAccountLogout = function() {
-  stateMap.signHTML.textContent = 'Please signHTML-in';
+  stateMap.signHTML.textContent = 'Please sign-in';
 };
 
 //////////////////////
