@@ -12,6 +12,7 @@ var helpers = require('./helpers');
 var model = require('./model');
 // var page = require('page');
 var pubSub = require('pubsub-js');
+var notie = require('notie');
 
 /* Views */
 var views = {};
@@ -25,7 +26,7 @@ var configMap = {
 var isTesting = true;
 
 var _testing = function() {
-  model.people.login('Alfred');
+  // model.people.login('Alfred');
 };
 
 
@@ -37,15 +38,17 @@ var _testing = function() {
 /* ACCOUNT */
 
 var _onSignClick = function() {
-  var userName;
   var currentUser = model.people.getCurrentUser();
 
   if(currentUser.getIsAnon()) {
-    userName = prompt('Please sign-in');
-    if(userName) {
-      model.people.login(userName);
-      this.textContent = '... Processing ...';
-    }
+    notie.input('Please sign-in with a nickname: ', 'Sign-in', 'Cancel', 'text', 'Nickname', function(userName) {
+      if( (userName.length < 3) || (userName.length > 12) ) {
+        notie.alert(3, 'Sorry, username must be between 3 and 12 characters');
+      } else {
+        model.people.login(userName);
+        document.qs('.account .sign').textContent = '... Processing ...';
+      }
+    });
   } else {
     model.people.logout();
   }

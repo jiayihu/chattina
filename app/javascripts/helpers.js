@@ -46,9 +46,9 @@ var setConfigMap = function(inputMap, configMap) {
 
 /**
  * Finds the parent node with given class
- * @param  @type {HTMLElement} child Element whose parent is looked for
+ * @param  {Object.HTMLElement} child Element whose parent is looked for
  * @param  {string} parentClass Classname of the parent node
- * @return @type {HTMLElement}
+ * @return {Object.HTMLElement}
  */
 var findParent = function(child, parentClass) {
   if(!child.parentNode) {
@@ -64,7 +64,7 @@ var findParent = function(child, parentClass) {
 
 /**
  * Animate the property of a DOM element
- * @param  {Object} element DOM Element
+ * @param  {Object.HTMLElement} element DOM Element
  * @param  {string} property Property name
  * @param  {number} value Final property value
  * @param  {number} time Animation duration

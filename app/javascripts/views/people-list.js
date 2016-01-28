@@ -97,21 +97,22 @@ var _onListChange = function(event, argMap) {
  * Binds the DOM event to controller event listener
  * @param  {string} eventName Name of the event
  * @param  {function} eventHandler Event listener
- * @return {boolean}
  */
 var bind = function(eventName, eventHandler) {
   if(eventName === 'setChatee') {
     //event delegation
     stateMap.peopleList.addEventListener('click', function(event) {
-      var targetClass = event.target.className;
+      var targetClass = event.target.classList;
       var chateeId;
 
-      //User didn't click a person to set the new chatee
-      if( ! ~targetClass.indexOf('person') ) {
+      // User didn't click a person to set the new chatee
+      // ~ is the single bitwise operator.
+      // @see {@url https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators}
+      if( ! ~event.target.className.indexOf('person') ) {
         return false;
       }
 
-      if(targetClass === 'person') {
+      if( targetClass.contains('person') ) {
         chateeId = event.target.dataset.id;
       } else {
         chateeId = helpers.findParent(event.target, 'person').dataset.id;
