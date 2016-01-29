@@ -60,7 +60,7 @@ var _makePerson = function(personMap) {
 
   // 'cid === undefined' instead of '!cid' because if cid is zero '!cid' returns 1
   if( cid === undefined || name === undefined ) {
-    throw 'Client id and name are required';
+    throw new Error('Client id and name are required');
   }
 
   var person = Object.create(personProto);
@@ -77,7 +77,7 @@ var _makePerson = function(personMap) {
 
   db.setItem(cid, person, function(error) {
     if(error) {
-      console.error(error);
+      throw error;
     }
   });
 
@@ -227,12 +227,12 @@ people = {
 
     stateMap.peopleDb.clear(function(err) {
       if(err) {
-        console.error('Error: clearDb.');
+        throw err;
       }
 
       stateMap.peopleDb.setItem(currentUser.cid, currentUser, function(err) {
         if(err) {
-          console.error('Error. setItem in clearDb');
+          throw err;
         }
       });
     });
@@ -255,7 +255,11 @@ people = {
   },
 
   login: function(userName) {
-    var sio = isFakeData? fake.mockSio : console.error('No Sio');
+    var sio = fake.mockSio;
+
+    if(!sio) {
+      throw new Error('No Socket.IO');
+    }
 
     stateMap.currentUser = _makePerson({
       cid: _makeCid(),
