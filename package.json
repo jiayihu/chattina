@@ -1,7 +1,7 @@
 {
   "name": "chattina",
   "version": "0.0.1",
-  "description": "MVC Chat in vanilla JS without JQuery or MVC framework",
+  "description": "MVC Chat in JS without JQuery or front-end framework",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -10,10 +10,10 @@
   "scripts": {
     "production": "gulp production",
     "gulp": "gulp",
-    "development": "gulp",
-    "test": "gulp production && karma start --single-run"
+    "development": "gulp"
   },
   "dependencies": {
+    "express": "^4.13.4",
     "localforage": "^1.3.3",
     "notie": "^2.1.0",
     "page": "^1.6.4",

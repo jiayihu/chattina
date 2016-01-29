@@ -4,9 +4,8 @@
 
 #Chattina *Work still in progress*
 
-An MVC Chat, built in vanilla Javascript for fun and learning. No JQuery/MV* Framework dependency, whereas tiny libraries are used to accomplish specific tasks.
-
-Focus on learning how a web application works.
+An MVC Chat, built in Javascript for fun and learning.
+For the front-end no JQuery/MV* Framework is used, whereas tiny libraries are used to accomplish specific tasks. Back-end leverages [Express.js](http://expressjs.com/) for faster development.
 
 >NOTICE: This is not meant to be used for any production since it doesn't provide polyfills to old browsers. I'm using for instance CSS Flexbox and Viewport units.
 
