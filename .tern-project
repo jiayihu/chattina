@@ -2,5 +2,8 @@
   "ecmaVersion": 5,
   "libs": [
     "browser"
-  ]
+  ],
+  "plugins": {
+    "node": {}
+  }
 }
