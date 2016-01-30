@@ -6,7 +6,8 @@
 var notie = require('notie');
 
 /**
- * Throws a new Error
+ * Displays an error to the user
+ * @param {string} msg Error message
  */
 var makeError = function(msg) {
   notie.alert(3, msg, 4);
@@ -29,6 +30,10 @@ var $ready = function(callback) {
  * Set the configMap of the module - It goes deep in the object
  */
 var setConfigMap = function(inputMap, configMap) {
+  if( (typeof inputMap !== 'object') || (typeof configMap !== 'object') ) {
+    throw '"setConfigMap()" requires both "inputMap" and "configMap" objects';
+  }
+
   var key;
 
   for(key in inputMap) {
@@ -51,7 +56,7 @@ var setConfigMap = function(inputMap, configMap) {
  * @return {Object.HTMLElement}
  */
 var findParent = function(child, parentClass) {
-  if(!child.parentNode) {
+  if(!child.parentNode || typeof parentClass !== 'string') {
     return;
   }
 
@@ -73,7 +78,7 @@ var animate = function(element, property, value, time) {
   var start;
   var initialValue = element[property];
   if(initialValue === undefined) {
-    throw new Error(property + ' cannot be found.');
+    throw new Error('"animate()": ' + property + ' cannot be found.');
   }
 
   var step = function(timestamp) {

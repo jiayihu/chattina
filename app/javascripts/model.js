@@ -27,7 +27,7 @@ var stateMap = {
 var isFakeData = true;
 
 /* Exported variables hoisting, used also in internal functions before their formal declaration */
-var people, chat, init;
+var people, chat;
 
 /**
  * PRIVATE FUNCTIONS
@@ -60,7 +60,7 @@ var _makePerson = function(personMap) {
 
   // 'cid === undefined' instead of '!cid' because if cid is zero '!cid' returns 1
   if( cid === undefined || name === undefined ) {
-    throw new Error('Client id and name are required');
+    throw new Error('_makePerson(): Client id and name are required');
   }
 
   var person = Object.create(personProto);
@@ -258,7 +258,7 @@ people = {
     var sio = fake.mockSio;
 
     if(!sio) {
-      throw new Error('No Socket.IO');
+      throw new Error('login(): No Socket.IO');
     }
 
     stateMap.currentUser = _makePerson({
@@ -390,7 +390,7 @@ chat = {
   }
 };
 
-init = function() {
+var init = function() {
   stateMap.anonUser = _makePerson({
     cid: configMap.anonId,
     id: configMap.anonId,

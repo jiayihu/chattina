@@ -164,6 +164,10 @@ var _onLogout = function() {
  * @return {boolean}
  */
 var bind = function(eventName, eventHandler) {
+  if( (typeof eventName !== 'string') || (typeof eventHandler !== 'function') ) {
+    throw new Error('bind() requires eventName to be a string and eventHandler to be a function');
+  }
+
   if(eventName === 'submitMsg') {
     stateMap.sendFormHTML.addEventListener('submit', function(event) {
       event.preventDefault();

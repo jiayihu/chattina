@@ -30,12 +30,16 @@ var _onAccountLogout = function() {
 
 /**
  * Binds event handlers from shell to DOM events
- * @param  {string} event Name of the event
- * @param  {Function} callback Event handler
+ * @param  {string} eventName Name of the event
+ * @param  {Function} eventHandler Event handler
  */
-var bind = function(event, callback) {
-  if(event === 'onSignClick') {
-    stateMap.signHTML.addEventListener('click', callback);
+var bind = function(eventName, eventHandler) {
+  if( (typeof eventName !== 'string') || (typeof eventHandler !== 'function') ) {
+    throw new Error('bind() requires eventName to be a string and eventHandler to be a function');
+  }
+
+  if(eventName === 'onSignClick') {
+    stateMap.signHTML.addEventListener('click', eventHandler);
   }
 };
 

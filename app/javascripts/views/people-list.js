@@ -31,15 +31,19 @@ var _onSetChatee = function(event, argMap) {
   console.log('_onSetChatee: %o', argMap);
   var oldChatee = argMap.oldChatee;
   var newChatee = argMap.newChatee;
+  var oldChateeHTML, newChateeHTML;
 
   if(oldChatee) {
-    stateMap.peopleList
-      .qs('.person[data-id="' + oldChatee.id + '"]')
-      .classList.remove('person--chatee');
+    oldChateeHTML = stateMap.peopleList.qs('.person[data-id="' + oldChatee.id + '"]');
+    if(oldChateeHTML) {
+      oldChateeHTML.classList.remove('person--chatee');
+    }
   }
-  stateMap.peopleList
-    .qs('.person[data-id="' + newChatee.id + '"]')
-    .classList.add('person--chatee');
+
+  newChateeHTML = stateMap.peopleList.qs('.person[data-id="' + newChatee.id + '"]');
+  if(newChateeHTML) {
+    newChateeHTML.classList.add('person--chatee');
+  }
 
   return true;
 };
@@ -99,6 +103,10 @@ var _onListChange = function(event, argMap) {
  * @param  {function} eventHandler Event listener
  */
 var bind = function(eventName, eventHandler) {
+  if( (typeof eventName !== 'string') || (typeof eventHandler !== 'function') ) {
+    throw new Error('bind() requires eventName to be a string and eventHandler to be a function');
+  }
+
   if(eventName === 'setChatee') {
     //event delegation
     stateMap.peopleList.addEventListener('click', function(event) {
