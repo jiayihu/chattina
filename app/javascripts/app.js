@@ -12,4 +12,9 @@ var init = function() {
   shell.init();
 };
 
-init();
+try {
+  init();
+} catch (error) {
+  helpers.makeError('Ops. Something went terribly wrong! Please open an issue on Github.');
+  throw error;
+}

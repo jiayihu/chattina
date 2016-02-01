@@ -321,8 +321,7 @@ chat = {
     }
 
     if(stateMap.currentUser.getIsAnon()) {
-      console.warn('User must be signed in before joining chat');
-      return false;
+      throw new Error('join(): User must be signed in before joining chat');
     }
 
     sio.on('listChange', _publishListChange);
