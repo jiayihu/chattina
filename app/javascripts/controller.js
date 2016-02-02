@@ -67,6 +67,10 @@ var onSetChatee = function(personId) {
 /* CHAT */
 
 var onSubmitMsg = function(msgText) {
+  if(!model.chat.getChatee()) {
+    return;
+  }
+
   model.chat.sendMsg(msgText);
 };
 

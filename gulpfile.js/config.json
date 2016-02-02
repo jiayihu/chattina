@@ -3,28 +3,15 @@
 
   "root": {
     "src": "./app",
-    "dest": "./public"
+    "dest": "./webapp/public"
   },
 
   "tasks": {
     "browserSync": {
-      "server": {
-        "baseDir": "public"
-      },
       "browser": "Google Chrome",
+      "port": 5000,
+      "proxy": "localhost:3000",
       "notify": false
-    },
-
-    "static": {
-      "src": "static",
-      "dest": "./"
-    },
-
-    "scripts": {
-      "main": "app.js",
-      "src": "javascripts",
-      "dest": "js",
-      "extensions": ["js"]
     },
 
     "css": {
@@ -40,6 +27,12 @@
 
       },
       "extensions": ["scss", "css", "sass"]
+    },
+
+    "fonts": {
+      "src": "fonts",
+      "dest": "fonts",
+      "extensions": ["woff2", "woff", "eot", "ttf", "svg"]
     },
 
     "html": {
@@ -59,10 +52,20 @@
       "extensions": ["jpg", "png", "svg", "gif"]
     },
 
-    "fonts": {
-      "src": "fonts",
-      "dest": "fonts",
-      "extensions": ["woff2", "woff", "eot", "ttf", "svg"]
+    "scripts": {
+      "main": "app.js",
+      "src": "javascripts",
+      "dest": "js",
+      "extensions": ["js"]
+    },
+
+    "server": {
+      "app": "./webapp/app.js"
+    },
+
+    "static": {
+      "src": "static",
+      "dest": "./"
     }
   }
 }

@@ -25,6 +25,7 @@ $screen-lg-desktop: 1200px;
   border-width: 3px;
   border-radius: 50%;
   border-style: solid;
-  max-height: 54px;
-  max-width: 54px;
+  width: 54px;
+  height: 54px;
+  background: $accent;
 }

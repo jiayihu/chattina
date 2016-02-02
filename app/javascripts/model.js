@@ -6,12 +6,13 @@
 'use strict';
 
 var fake = require('./fake'); //Fake data
+var io = require('socket.io-client')('http://localhost:3000');
 var localforage = require('localforage'); //Browser data storage
 var pubSub = require('pubsub-js');
 
 var configMap = {
   anonId: 'a0', //Special ID per anonymous person
-  defaultAvatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg'
+  defaultAvatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg'
 };
 var stateMap = {
   anonUser: null,
@@ -24,7 +25,7 @@ var stateMap = {
   }),
   currentUser: null
 };
-var isFakeData = true;
+var isFakeData = false;
 
 /* Exported variables hoisting, used also in internal functions before their formal declaration */
 var people, chat;
@@ -96,6 +97,8 @@ var _updateList = function(peopleList) {
   var currentUser = people.getCurrentUser();
   var isChateeonline = false;
 
+  console.log('_updateList: %o', peopleList);
+
   people.clearDb();
 
   peopleList.forEach(function(person) {
@@ -147,7 +150,7 @@ var _updateList = function(peopleList) {
 /**
  * Updates the current user information and publishes an 'login' event when
  * backend sends confirmation and data for the user login
- * @param  {object} user User data returned from the backend
+ * @param  {array} userList List of user data returned from the backend
  */
 var _completeLogin = function(userList) {
   var user = userList[0];
@@ -255,9 +258,9 @@ people = {
   },
 
   login: function(userName) {
-    var sio = fake.mockSio;
+    var socket = isFakeData? fake.mockSio : io;
 
-    if(!sio) {
+    if(!socket) {
       throw new Error('login(): No Socket.IO');
     }
 
@@ -267,9 +270,9 @@ people = {
       avatar: configMap.defaultAvatar
     });
 
-    sio.on('userupdate', _completeLogin);
+    socket.on('userUpdate', _completeLogin);
 
-    sio.emit('addUser', {
+    socket.emit('addUser', {
       cid: stateMap.currentUser.cid,
       name: stateMap.currentUser.name,
       avatar: stateMap.currentUser.avatar
@@ -302,19 +305,8 @@ chat = {
     return stateMap.chatee;
   },
 
-  leave: function() {
-    var sio = fake.mockSio;
-
-    stateMap.chatee = null;
-    stateMap.isConnected = false;
-
-    if(sio) {
-      sio.emit('leaveChat');
-    }
-  },
-
   join: function() {
-    var sio = fake.mockSio;
+    var socket = isFakeData? fake.mockSio : io;
 
     if(stateMap.isConnected) {
       return false;
@@ -324,19 +316,30 @@ chat = {
       throw new Error('join(): User must be signed in before joining chat');
     }
 
-    sio.on('listChange', _publishListChange);
-    sio.on('updateChat', _publishUpdateChat);
+    socket.on('listChange', _publishListChange);
+    socket.on('updateChat', _publishUpdateChat);
     stateMap.isConnected = true;
 
     return true;
   },
 
+  leave: function() {
+    var socket = isFakeData? fake.mockSio : io;
+
+    stateMap.chatee = null;
+    stateMap.isConnected = false;
+
+    if(socket) {
+      socket.emit('leaveChat');
+    }
+  },
+
   sendMsg: function(msgText) {
     var msg;
-    var sio = fake.mockSio;
+    var socket = isFakeData? fake.mockSio : io;
 
     //Abort sending a msg if there is no connection or user/chatee is not set
-    if( !sio || !(stateMap.currentUser && stateMap.chatee) ) {
+    if( !socket || !(stateMap.currentUser && stateMap.chatee) ) {
       return false;
     }
 
@@ -348,7 +351,7 @@ chat = {
     };
 
     _publishUpdateChat(msg);
-    sio.emit('updateChat', msg);
+    socket.emit('updateChat', msg);
 
     return true;
   },
@@ -382,9 +385,9 @@ chat = {
    * })
    */
   updateAvatar: function(avatarMap) {
-    var sio = fake.mockSio;
-    if(sio) {
-      sio.emit('updateAvatar', avatarMap);
+    var socket = isFakeData? fake.mockSio : io;
+    if(socket) {
+      socket.emit('updateAvatar', avatarMap);
     }
   }
 };

@@ -105,7 +105,7 @@ var mockSio = {
     callbackMap[msgType] = callback;
   },
   emit: function(msgType, data) {
-    if(msgType === 'addUser' && callbackMap.userupdate) {
+    if(msgType === 'addUser' && callbackMap.userUpdate) {
       setTimeout(function() {
         var person = {
           _id: _makeFakeId(),
@@ -115,7 +115,7 @@ var mockSio = {
 
         //Add the new user to the list. This is applied also when user logs in.
         peopleList.push(person);
-        callbackMap.userupdate([person]);
+        callbackMap.userUpdate([person]);
         sendListChange();
       }, 1000);
     }

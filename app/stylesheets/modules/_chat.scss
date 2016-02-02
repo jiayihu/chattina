@@ -7,7 +7,7 @@
     align-items: center;
     border-bottom: 1px solid rgba($gray-light, .4);
     display: flex;
-    padding: 1.5rem 1rem;
+    padding: 1rem;
 
     &__avatar {
       @include avatar;
