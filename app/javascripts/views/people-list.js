@@ -24,11 +24,11 @@ var personTemplate =
 
 /**
  * Subscriber for 'setChatee' event. Selects the new chatee on the list.
- * @param  {string} msg Event name/Topic
+ * @param  {string} event Event name/Topic
  * @param  {object} argMap Object map with old and new chatee
+ * @return {boolean}
  */
 var _onSetChatee = function(event, argMap) {
-  console.log('_onSetChatee: %o', argMap);
   var oldChatee = argMap.oldChatee;
   var newChatee = argMap.newChatee;
   var oldChateeHTML, newChateeHTML;
@@ -51,7 +51,7 @@ var _onSetChatee = function(event, argMap) {
 /**
  * Subscriber for 'listChange' event. Renders the new people-list and
  * highlights the chatee if defined
- * @param  {string} msg Event name/Topic
+ * @param  {string} event Event name/Topic
  * @param  {object} argMap Object map with 'newPeopleDb' and 'chatee'
  */
 var _onListChange = function(event, argMap) {
@@ -89,8 +89,6 @@ var _onListChange = function(event, argMap) {
   }
 
   stateMap.peopleList.innerHTML = listHTML;
-
-  return true;
 };
 
 //////////////////////
@@ -126,7 +124,7 @@ var bind = function(eventName, eventHandler) {
         chateeId = helpers.findParent(event.target, 'person').dataset.id;
       }
 
-      if(chateeId === undefined) {
+      if(typeof chateeId !== 'string') {
         return false;
       }
 

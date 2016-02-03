@@ -61,6 +61,7 @@ var _makeFakeId = function() {
 
 /**
  * Tries to send a fake msg to the client every 4s until success
+ * @param {string} msgText text content
  */
 var emitMockMsg = function(msgText) {
   window.setTimeout(function() {

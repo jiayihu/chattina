@@ -12,18 +12,28 @@
             2,
             "unix"
         ],
-        "semi": [
-            2,
-            "always"
-        ],
         "no-console": [
             0
         ],
         "no-unused-vars": [
           1
         ],
+        "no-undefined": [
+          1
+        ],
         "no-use-before-define": [
           2
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "valid-jsdoc": [
+          1,
+          {
+            "requireReturn": false,
+            "requireReturnDescription": false
+          }
         ]
     },
     "env": {

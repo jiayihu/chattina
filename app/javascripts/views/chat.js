@@ -97,8 +97,9 @@ var _clearChat = function() {
 
 /**
  * Subscriber for 'setChatee' event. Selects the new chatee on the list.
- * @param  {string} msg Event name/Topic
+ * @param  {string} event Event name/Topic
  * @param  {object} argMap Object map with old and new chatee
+ * @return {boolean}
  */
 var _onSetChatee = function(event, argMap) {
   var oldChatee = argMap.oldChatee;
@@ -124,8 +125,9 @@ var _onSetChatee = function(event, argMap) {
 
 /**
  * Subscriber for 'updateChat' event. Updates the chat log with the new msg.
- * @param  {string} msg Event name/Topic
+ * @param  {string} event Event name/Topic
  * @param  {object} msg Object map with old and new chatee
+ * @return {boolean}
  * @example msg = {
  *   destId: msg.destId,
  *   destName: msg.destName,
@@ -161,7 +163,6 @@ var _onLogout = function() {
  * Binds the DOM event to controller event listener
  * @param  {string} eventName Name of the event
  * @param  {function} eventHandler Event listener
- * @return {boolean}
  */
 var bind = function(eventName, eventHandler) {
   if( (typeof eventName !== 'string') || (typeof eventHandler !== 'function') ) {

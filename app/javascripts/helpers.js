@@ -39,12 +39,10 @@ var setConfigMap = function(inputMap, configMap) {
   for(key in inputMap) {
     if(configMap.hasOwnProperty(key)) {
       if(inputMap[key] instanceof Object) {
-        window.setConfigMap(inputMap[key], configMap[key]);
+        setConfigMap(inputMap[key], configMap[key]);
       } else {
         configMap[key] = inputMap[key];
       }
-    } else {
-      window.makeError('Wrong inputMap', 'Property "' + key + '" is not available in configMap');
     }
   }
 };
@@ -77,8 +75,8 @@ var findParent = function(child, parentClass) {
 var animate = function(element, property, value, time) {
   var start;
   var initialValue = element[property];
-  if(initialValue === undefined) {
-    throw new Error('"animate()": ' + property + ' cannot be found.');
+  if(typeof initialValue !== 'number') {
+    throw new Error('"animate()": ' + property + ' cannot be animated.');
   }
 
   var step = function(timestamp) {

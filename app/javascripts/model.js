@@ -59,8 +59,7 @@ var _makePerson = function(personMap) {
   var avatar = personMap.avatar;
   var role = personMap.role;
 
-  // 'cid === undefined' instead of '!cid' because if cid is zero '!cid' returns 1
-  if( cid === undefined || name === undefined ) {
+  if( typeof cid !== 'string'  || typeof name !== 'string' ) {
     throw new Error('_makePerson(): Client id and name are required');
   }
 
@@ -92,6 +91,7 @@ var _makeCid = function() {
 /**
  * Refresh the 'peopleDb' when a new people list is received
  * @param  {array} peopleList Array of people returned from back-end
+ * @return {object} stateMap.peopleDb Updated peopleDb
  */
 var _updateList = function(peopleList) {
   var currentUser = people.getCurrentUser();
