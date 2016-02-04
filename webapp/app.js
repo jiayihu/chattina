@@ -4,7 +4,6 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var routes = require('./routes');
-var socket = require('./socket');
 
 var app = express();
 var server = http.createServer(app);
@@ -16,15 +15,12 @@ if(env === 'development') {
   app.use(logger('common'));
 }
 
-app.use(bodyParser.text());
+app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static( __dirname + '/public' ));
 
 // Routes
-routes.init(app);
-
-// Socket
-socket.init(server);
+routes.init(app, server);
 
 server.listen(3000);
 

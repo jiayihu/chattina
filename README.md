@@ -2,7 +2,9 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/32903457402d47f2bb1fc5d544701458)](https://www.codacy.com/app/steph-jiayi/chattina)
 ![Love](https://img.shields.io/badge/Made%20with-%E2%99%A5-red.svg)
 
-#Chattina *Work still in progress*
+# Chattina
+
+### *Work still in progress*
 
 An MVC Chat, built in Javascript for fun and learning.
 For the front-end no JQuery/MV* Framework is used, whereas tiny libraries are used to accomplish specific tasks. Back-end leverages [Express.js](http://expressjs.com/) & [Socket.io](http://socket.io/) for faster development.

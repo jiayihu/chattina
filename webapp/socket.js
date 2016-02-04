@@ -6,7 +6,7 @@ var peopleList = require('./model/people-list.js');
 // EVENT HANDLERS //
 ////////////////////
 
-var onAddUser = function(io, socket, user) {
+var _onAddUser = function(io, socket, user) {
   user.socketId = socket.id;
   var newUser = peopleList.add([user]);
 
@@ -20,8 +20,8 @@ var onAddUser = function(io, socket, user) {
   }, 1000);
 };
 
-var onLeaveChat = function(io, socket) {
-  console.log('leaveChat');
+var _onLeaveChat = function(io, socket) {
+  console.log('leaveChat: %s', socket.id);
   var oldUser = {
     socketId: socket.id
   };
@@ -32,7 +32,7 @@ var onLeaveChat = function(io, socket) {
   }
 };
 
-var onUpdateChat = function(io, socket, msg) {
+var _onUpdateChat = function(io, socket, msg) {
   console.log('updateChat(): %j', msg);
 
   var destSocketId = peopleList.getById(msg.destId).socketId;
@@ -41,7 +41,7 @@ var onUpdateChat = function(io, socket, msg) {
   }
 };
 
-var onUpdateAvatar = function(io, socket, avatarMap) {
+var _onUpdateAvatar = function(io, socket, avatarMap) {
   console.log('updateAvatar: ' + avatarMap);
 };
 
@@ -54,22 +54,22 @@ var init = function(server) {
 
   io.on('connection', function(socket) {
     socket.on('addUser', function(user) {
-      onAddUser(io, socket, user);
+      _onAddUser(io, socket, user);
     });
 
     socket.on('disconnect', function() {
-      onLeaveChat(io, socket);
+      _onLeaveChat(io, socket);
     });
 
     socket.on('leaveChat', function() {
-      onLeaveChat(io, socket);
+      _onLeaveChat(io, socket);
     });
 
     socket.on('updateChat', function(msg) {
-      onUpdateChat(io, socket, msg);
+      _onUpdateChat(io, socket, msg);
     });
     socket.on('updateAvatar', function(avatarMap) {
-      onUpdateAvatar(io, socket, avatarMap);
+      _onUpdateAvatar(io, socket, avatarMap);
     });
   });
 };
