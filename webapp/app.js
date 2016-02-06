@@ -4,6 +4,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var routes = require('./routes');
+var socket = require('./socket');
 
 var app = express();
 var server = http.createServer(app);
@@ -21,6 +22,21 @@ app.use(express.static( __dirname + '/public' ));
 
 // Routes
 routes.init(app, server);
+
+socket.init(server);
+
+//Error handling
+app.use(function(err, req, response, next) {
+  if(err) {
+    response.status(500);
+    var msg = err.message ? err.message : err;
+    response.send({
+      err: msg
+    });
+  } else {
+    next();
+  }
+});
 
 server.listen(3000);
 

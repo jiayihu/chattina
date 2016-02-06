@@ -15,6 +15,10 @@ var MongoClient = mongodb.MongoClient;
 var _makeMongoId = mongodb.ObjectID;
 var util = require('util');
 
+var ajv = require('ajv')();
+var userSchema = require('./model/schema/user.json');
+var validate = ajv.compile(userSchema);
+
 var url = 'mongodb://localhost:27017/chattina';
 var dbHandle;
 
@@ -32,17 +36,28 @@ MongoClient.connect(url, function(err, db) {
 /**
  * Inserts new document into collection
  * @param  {string} colName Collection name
- * @param  {object} data Document object
+ * @param  {object} data User JSON object, must be valid schema
  * @param  {Function} callback Callback
  */
 var create = function(colName, data, callback) {
   var options = {};
+  var error;
   callback = callback || function() {};
 
-  if( (typeof data !== 'object') || (Object.keys(data) === 0) ) {
-    var err = new Error('create(): No POST data');
-    console.error(err);
-    callback(err, null);
+  if( (typeof data !== 'object') || (Object.keys(data).length === 0) ) {
+    error = new Error('create(): No POST object data');
+    console.error(error);
+    callback(error, null);
+    return;
+  }
+
+  // Validate data with 'userSchema' and check if there is a name
+  // We are not using 'required' in the schema for the name property because
+  // it's not required when updating a user document
+  if( !validate(data) || (!data.name) ) {
+    error = new Error('create(): data is not valid');
+    console.error(error);
+    callback(error, null);
     return;
   }
 
@@ -116,7 +131,7 @@ var read = function(colName, id, callback) {
  */
 var remove = function(colName, id, callback) {
   if(typeof id !== 'string') {
-    var err = new Error('read(): id parameter must be string');
+    var err = new Error('remove(): id parameter must be string');
     console.error(err);
     callback(err, null);
     return;
@@ -127,6 +142,8 @@ var remove = function(colName, id, callback) {
   };
   callback = callback || function() {};
 
+  console.log(filter);
+
   dbHandle.collection(colName, function(err, col) {
     if(err) {
       console.error('remove(): Collection with name "' + colName + '" not found.\n', err);
@@ -134,7 +151,7 @@ var remove = function(colName, id, callback) {
       return;
     }
 
-    col.deleteOne(filter, function(err, result) {
+    col.findOneAndDelete(filter, function(err, result) {
       if(err) {
         console.error('Cannot delete document.\n', err);
       }
@@ -151,10 +168,20 @@ var remove = function(colName, id, callback) {
  * @param  {Function} callback Callback
  */
 var update = function(colName, id, fields, callback) {
+  var error;
+
   if( (typeof id !== 'string') || (typeof fields !== 'object') || (Object.keys(fields).length === 0) ) {
-    var err = new Error('read(): id parameter must be string and fields paramater must be a not empty object');
-    console.error(err);
-    callback(err, null);
+    error = new Error('read(): id parameter must be string and fields paramater must be a not empty object');
+    console.error(error);
+    callback(error, null);
+    return;
+  }
+
+  // Validate data with 'userSchema'
+  if( !validate(fields) ) {
+    error = new Error('update(): data is not valid');
+    console.error(error);
+    callback(error, null);
     return;
   }
 
@@ -181,7 +208,7 @@ var update = function(colName, id, fields, callback) {
       if(err) {
         console.error('Cannot update document', err);
       }
-      
+
       callback(err, result);
     });
   });

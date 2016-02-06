@@ -3,7 +3,6 @@ var runSequence = require('run-sequence');
 
 var defaultTask = function() {
   runSequence(
-    'server',
     ['html', 'css', 'scripts'],
     ['fonts', 'images', 'static'],
     'watch'

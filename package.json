@@ -13,6 +13,7 @@
     "development": "gulp"
   },
   "dependencies": {
+    "ajv": "^3.5.3",
     "basic-auth": "^1.0.3",
     "body-parser": "^1.14.2",
     "express": "^4.13.4",

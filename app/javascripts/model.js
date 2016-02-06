@@ -267,7 +267,7 @@ people = {
     stateMap.currentUser = _makePerson({
       cid: _makeCid(),
       name: userName,
-      avatar: configMap.defaultAvatar
+      avatar: encodeURIComponent(configMap.defaultAvatar)
     });
 
     socket.on('userUpdate', _completeLogin);

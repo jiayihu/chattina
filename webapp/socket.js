@@ -53,6 +53,8 @@ var init = function(server) {
   var io = require('socket.io')(server);
 
   io.on('connection', function(socket) {
+    console.log('User connected to socket.');
+    
     socket.on('addUser', function(user) {
       _onAddUser(io, socket, user);
     });
