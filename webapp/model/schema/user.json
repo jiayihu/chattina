@@ -15,6 +15,9 @@
     },
     "role": {
       "type": "string"
+    },
+    "isConnected": {
+      "type": "boolean"
     }
   }
 }

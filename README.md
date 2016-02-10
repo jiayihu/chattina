@@ -7,7 +7,8 @@
 ### *Work still in progress*
 
 An MVC Chat, built in Javascript for fun and learning.
-For the front-end no JQuery/MV* Framework is used, whereas tiny libraries are used to accomplish specific tasks. Back-end leverages [Express.js](http://expressjs.com/) & [Socket.io](http://socket.io/) for faster development.
+For the front-end no JQuery/MV* Framework is used, whereas tiny libraries are used to accomplish specific tasks.
+Back-end leverages [Express.js](http://expressjs.com/) & [Socket.io](http://socket.io/) for faster development.
 
 >NOTICE: This is not meant to be used for any production since it doesn't provide polyfills to old browsers. I'm using for instance CSS Flexbox and Viewport units.
 
@@ -43,3 +44,7 @@ Javascript files are commented with [JSDoc 3](https://github.com/jsdoc3/jsdoc) f
 ```
 jsdoc app/javascripts -r -d docs
 ```
+
+## Todo
+
+See *todo.md* file

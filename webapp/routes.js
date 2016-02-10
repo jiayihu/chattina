@@ -5,7 +5,7 @@
 
 'use strict';
 
-var db = require('./mongo');
+var crud = require('./crud');
 
 var allowedObjects = ['user'];
 
@@ -44,7 +44,8 @@ var init = function(app) {
   app.get('/:object/list', function(request, response) {
     var object = request.params.object;
 
-    db.read(object, null, function(err, list) {
+
+    crud.read(object, null, function(err, list) {
       if(!err) {
         response.send(list);
       } else {
@@ -56,7 +57,8 @@ var init = function(app) {
   app.get('/:object/read/:id', function(request, response) {
     var object = request.params.object;
     var id = request.params.id;
-    db.read(object, id, function(err, doc) {
+
+    crud.read(object, id, function(err, doc) {
       if(!err) {
         response.send(doc);
       } else {
@@ -67,7 +69,8 @@ var init = function(app) {
 
   app.post('/:object/create', function(request, response) {
     var object = request.params.object;
-    db.create(object, request.body, function(err, result) {
+
+    crud.create(object, request.body, function(err, result) {
       if( !err && (result.insertedCount === 1) ) {
         response.send({
           success: object + ' created!'
@@ -82,7 +85,8 @@ var init = function(app) {
   app.post('/:object/update/:id', function(request, response) {
     var object = request.params.object;
     var id = request.params.id;
-    db.update(object, id, request.body, function(err, result) {
+
+    crud.update(object, id, request.body, function(err, result) {
       if( !err && result.ok ) {
         //No problems with MongoDB operation but check if any document was
         //actually updated
@@ -104,7 +108,8 @@ var init = function(app) {
   app.get('/:object/remove/:id', function(request, response) {
     var object = request.params.object;
     var id = request.params.id;
-    db.remove(object, id, function(err, result) {
+
+    crud.remove(object, id, function(err, result) {
       if( !err && result.ok ) {
         //No problems with MongoDB operation but check if any document was
         //actually deleted

@@ -124,43 +124,6 @@ var read = function(colName, id, callback) {
 };
 
 /**
- * Removes document from collection
- * @param  {string} colName Collection name
- * @param  {string} id Document ID
- * @param  {Function} callback Callback
- */
-var remove = function(colName, id, callback) {
-  if(typeof id !== 'string') {
-    var err = new Error('remove(): id parameter must be string');
-    console.error(err);
-    callback(err, null);
-    return;
-  }
-
-  var filter = {
-    _id: _makeMongoId(id)
-  };
-  callback = callback || function() {};
-
-  console.log(filter);
-
-  dbHandle.collection(colName, function(err, col) {
-    if(err) {
-      console.error('remove(): Collection with name "' + colName + '" not found.\n', err);
-      callback(err, null);
-      return;
-    }
-
-    col.findOneAndDelete(filter, function(err, result) {
-      if(err) {
-        console.error('Cannot delete document.\n', err);
-      }
-      callback(err, result);
-    });
-  });
-};
-
-/**
  * Updates the document with given 'id'
  * @param  {string} colName Collection name
  * @param  {string} id Document ID
@@ -209,6 +172,43 @@ var update = function(colName, id, fields, callback) {
         console.error('Cannot update document', err);
       }
 
+      callback(err, result);
+    });
+  });
+};
+
+/**
+ * Removes document from collection
+ * @param  {string} colName Collection name
+ * @param  {string} id Document ID
+ * @param  {Function} callback Callback
+ */
+var remove = function(colName, id, callback) {
+  if(typeof id !== 'string') {
+    var err = new Error('remove(): id parameter must be string');
+    console.error(err);
+    callback(err, null);
+    return;
+  }
+
+  var filter = {
+    _id: _makeMongoId(id)
+  };
+  callback = callback || function() {};
+
+  console.log(filter);
+
+  dbHandle.collection(colName, function(err, col) {
+    if(err) {
+      console.error('remove(): Collection with name "' + colName + '" not found.\n', err);
+      callback(err, null);
+      return;
+    }
+
+    col.findOneAndDelete(filter, function(err, result) {
+      if(err) {
+        console.error('Cannot delete document.\n', err);
+      }
       callback(err, result);
     });
   });
