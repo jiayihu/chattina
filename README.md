@@ -4,6 +4,8 @@
 
 # Chattina
 
+![screenshot](https://raw.githubusercontent.com/jiayihu/chattina/master/screenshot.png)
+
 ### *Work still in progress*
 
 An MVC Chat, built in Javascript for fun and learning.
