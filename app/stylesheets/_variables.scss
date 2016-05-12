@@ -1,0 +1,35 @@
+// Colors
+
+$primary: #A72F45;
+
+$gray-base:              #000 !default;
+$gray-darker:            #111 !default; // #222
+$gray-dark:              rgba($gray-base, .87) !default;
+$gray:                   rgba($gray-base, .54) !default;
+$gray-light:             rgba($gray-base, .27) !default;
+$gray-lighter:           rgba($gray-base, .12) !default;
+
+$white-base:              #fff !default;
+$white:                   rgba($white-base, .70) !default;
+$white-light:             rgba($white-base, .50) !default;
+$white-lighter:           rgba($white-base, .12) !default;
+
+$brand-primary:         $gray-base !default;
+$brand-success:         #5cb85c !default;
+$brand-info:            #5bc0de !default;
+$brand-warning:         #f0ad4e !default;
+$brand-danger:          #d9534f !default;
+
+// Media queries breakpoints
+
+// Extra small screen / phone
+$screen-phone:                  480px !default;
+
+// Small screen / tablet
+$screen-tablet:                  768px !default;
+
+// Medium screen / desktop
+$screen-desktop:                  992px !default;
+
+// Large screen / wide desktop
+$screen-lg-desktop:                  1200px !default;

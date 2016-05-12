@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="382px" height="224px" viewBox="0 0 382 224" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>kanban</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Portfolio" transform="translate(-323.000000, -273.000000)">
+            <g id="project" transform="translate(219.000000, 263.000000)">
+                <g id="kanban" transform="translate(104.000000, 10.000000)">
+                    <rect id="Rectangle-13" stroke-opacity="0.12" stroke="#FFFFFF" x="0" y="0" width="382" height="224"></rect>
+                    <rect id="Rectangle-13" stroke-opacity="0.499207428" stroke="#FFFFFF" x="0" y="0" width="128" height="224"></rect>
+                    <rect id="Rectangle-13" stroke-opacity="0.499207428" stroke="#FFFFFF" x="127" y="0" width="128" height="224"></rect>
+                    <rect id="Rectangle-13" stroke-opacity="0.499207428" stroke="#FFFFFF" x="254" y="0" width="128" height="224"></rect>
+                    <rect id="divider" fill-opacity="0.499207428" fill="#FFFFFF" x="0" y="36" width="382" height="2"></rect>
+                    <g id="notes" transform="translate(16.000000, 55.000000)" fill="#FFFFFF" fill-opacity="0.499207428">
+                        <rect id="Rectangle-17" x="0" y="0" width="96" height="24"></rect>
+                        <rect id="Rectangle-17" x="0" y="40" width="96" height="24"></rect>
+                        <rect id="Rectangle-17" x="0" y="80" width="96" height="24"></rect>
+                    </g>
+                    <g id="notes" transform="translate(270.000000, 55.000000)" fill="#FFFFFF" fill-opacity="0.499207428">
+                        <rect id="Rectangle-17" x="0" y="0" width="96" height="24"></rect>
+                    </g>
+                    <g id="notes" transform="translate(143.000000, 55.000000)" fill="#FFFFFF" fill-opacity="0.499207428">
+                        <rect id="Rectangle-17" x="0" y="0" width="96" height="24"></rect>
+                        <rect id="Rectangle-17" x="0" y="40" width="96" height="24"></rect>
+                    </g>
+                    <text id="Todo" font-family="SourceSansPro-Regular, Source Sans Pro" font-size="14" font-weight="normal" fill="#FFFFFF">
+                        <tspan x="16" y="24">Todo</tspan>
+                    </text>
+                    <text id="In-Progress" font-family="SourceSansPro-Regular, Source Sans Pro" font-size="14" font-weight="normal" fill="#FFFFFF">
+                        <tspan x="144" y="24">In Progress</tspan>
+                    </text>
+                    <text id="Under-Review" font-family="SourceSansPro-Regular, Source Sans Pro" font-size="14" font-weight="normal" fill="#FFFFFF">
+                        <tspan x="271" y="24">Under Review</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

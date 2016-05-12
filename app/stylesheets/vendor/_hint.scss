@@ -1,0 +1,29 @@
+// hint.scss
+//
+// Aggregates all other sass files.
+
+/*-------------------------------------*\
+	HINT.css - A CSS tooltip library
+\*-------------------------------------*/
+
+
+/**
+ * HINT.css is a tooltip library made in pure CSS.
+ *
+ * Source: https://github.com/chinchang/hint.css
+ * Demo: http://kushagragour.in/lab/hint/
+ *
+ * Release under The MIT License
+ *
+ */
+
+@import "hint/hint-variables";
+@import "hint/hint-mixins";
+@import "hint/hint-core";
+@import "hint/hint-position";
+@import "hint/hint-sizes";
+@import "hint/hint-theme";
+@import "hint/hint-color-types";
+@import "hint/hint-always";
+@import "hint/hint-rounded";
+@import "hint/hint-effects";

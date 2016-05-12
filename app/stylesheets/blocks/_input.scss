@@ -1,0 +1,96 @@
+// scss-lint:disable SelectorFormat
+
+.input {
+  display: inline-block;
+  margin: 1em 0;
+  position: relative;
+  vertical-align: top;
+  width: calc(100% - 2em);
+  z-index: 1;
+
+  &__field {
+    -webkit-appearance: none; // for box shadows to show on iOS
+    border: 0;
+    border-radius: 0;
+    color: $white-base;
+    display: block;
+    float: right;
+    padding: .8em;
+    position: relative;
+    width: 60%;
+
+    &:focus {
+      outline: none;
+    }
+
+    &--hoshi {
+      background: transparent;
+      margin-top: 1em;
+      padding: 1em 0;
+      width: 100%;
+    }
+  }
+
+  &__label {
+    color: #6a7989;
+    display: inline-block;
+    float: right;
+    padding: 0 1em;
+    text-transform: uppercase;
+    user-select: none;
+    width: 40%;
+
+    &--hoshi {
+      bottom: 0;
+      height: calc(100% - 1em);
+      left: 0;
+      padding: 0 .25em;
+      pointer-events: none;
+      position: absolute;
+      text-align: left;
+      width: 100%;
+    }
+
+    &--hoshi::before,
+    &--hoshi::after {
+      border-bottom: 1px solid $white-lighter;
+      content: '';
+      height: calc(100% - 10px);
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    &--hoshi::after {
+      border-color: $white;
+      transform: translate3d(-100%, 0, 0);
+      transition: transform .3s;
+    }
+  }
+
+  &__label-content {
+    display: block;
+    width: 100%;
+
+    &--hoshi {
+      left: 0;
+      position: absolute;
+      top: .5em;
+    }
+  }
+
+  &--hoshi {
+    overflow: hidden;
+  }
+}
+
+.input__field--hoshi:focus + .input__label--hoshi::after,
+.input--filled .input__label--hoshi::after {
+  transform: translate3d(0, 0, 0);
+}
+
+.input__field--hoshi:focus + .input__label--hoshi .input__label-content--hoshi,
+.input--filled .input__label-content--hoshi {
+  animation: fadeUp .3s forwards;
+}

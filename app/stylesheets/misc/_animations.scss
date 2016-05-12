@@ -1,0 +1,38 @@
+// scss-lint:disable SelectorFormat
+
+@mixin animated($duration: 1s) {
+  animation-duration: $duration;
+  animation-fill-mode: both;
+}
+
+@keyframes scroll {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: .2;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-enter {
+  @include animated(2s);
+  animation-name: fadeIn;
+}
+
+.fade-appear {
+  @include animated;
+  animation-name: fadeIn;
+}

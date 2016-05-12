@@ -1,0 +1,13 @@
+scss_files: "app/stylesheets/**/*.scss"
+
+exclude: "app/stylesheets/vendor/**/*.scss"
+
+linters:
+  ColorKeyword:
+    enabled: false
+
+  ColorVariable:
+    enabled: false
+
+  HexNotation:
+    enabled: false

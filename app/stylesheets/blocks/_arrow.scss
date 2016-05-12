@@ -1,0 +1,74 @@
+.arrow {
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  height: 4rem;
+  width: 2.5rem;
+
+  @media (min-width: $screen-tablet) {
+    border: 1px solid $white-lighter;
+  }
+
+  &:hover::before,
+  &:hover::after {
+    background-color: $white-base;
+  }
+
+  &::before,
+  &::after {
+    background-color: $white-light;
+    content: '';
+    display: block;
+    height: 1px;
+    margin: 0 auto;
+    position: relative;
+    transition: background-color .4s ease-out;
+    width: 1rem;
+  }
+
+  &--dark {
+    @media (min-width: $screen-tablet) {
+      border: 1px solid $gray-lighter;
+    }
+
+    &:hover::before,
+    &:hover::after {
+      background-color: $gray-dark;
+    }
+
+    &::before,
+    &::after {
+      background-color: $gray-light;
+    }
+  }
+
+  &::before {
+    top: -4px;
+    transform: rotate(-45deg);
+  }
+
+  &::after {
+    bottom: -6px;
+    transform: rotate(45deg);
+  }
+
+  &--next::before {
+    transform: rotate(45deg);
+  }
+
+  &--next::after {
+    transform: rotate(-45deg);
+  }
+
+  &--disabled {
+    opacity: 0;
+  }
+
+  [data-hint] {
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
